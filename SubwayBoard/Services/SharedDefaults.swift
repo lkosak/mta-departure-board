@@ -37,7 +37,7 @@ enum SharedDefaults {
 }
 
 /// Codable version of Departure for sharing via UserDefaults
-struct CachedDeparture: Codable, Identifiable {
+struct CachedDeparture: Codable, Hashable, Identifiable {
     let id: UUID
     let line: String
     let destination: String
