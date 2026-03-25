@@ -5,4 +5,5 @@ struct Departure: Identifiable {
     let line: String
     let destination: String
     let minutes: Int
+    let arrivalDate: Date
 }

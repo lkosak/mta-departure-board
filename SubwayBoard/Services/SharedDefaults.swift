@@ -51,6 +51,6 @@ struct CachedDeparture: Codable, Hashable, Identifiable {
         self.id = departure.id
         self.line = departure.line
         self.destination = departure.destination
-        self.arrivalTime = now.addingTimeInterval(Double(departure.minutes) * 60)
+        self.arrivalTime = departure.arrivalDate
     }
 }
