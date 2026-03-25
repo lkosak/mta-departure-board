@@ -21,7 +21,7 @@ struct SubwayBoardProvider: AppIntentTimelineProvider {
 
     func timeline(for configuration: SelectLineIntent, in context: Context) async -> Timeline<DepartureEntry> {
         let entry = makeEntry(for: configuration)
-        let nextUpdate = Calendar.current.date(byAdding: .second, value: 60, to: .now)!
+        let nextUpdate = Calendar.current.date(byAdding: .second, value: 30, to: .now)!
         return Timeline(entries: [entry], policy: .after(nextUpdate))
     }
 
