@@ -44,7 +44,7 @@ struct MTAFeedService {
         for entity in message.entity {
             guard entity.hasTripUpdate else { continue }
             let trip = entity.tripUpdate
-            guard trip.trip.routeID == feed.line else { continue }
+            guard trip.trip.routeID.hasPrefix(feed.line) else { continue }
 
             for stopTime in trip.stopTimeUpdate {
                 guard stopTime.stopID == feed.directionStopId else { continue }
@@ -58,11 +58,13 @@ struct MTAFeedService {
                     continue
                 }
 
-                let minutes = Int((Double(arrivalTime) - now) / 60.0)
-                guard minutes >= 0 else { continue }
+                let seconds = Double(arrivalTime) - now
+                guard seconds >= 0 else { continue }
+                let minutes = Int(seconds / 60.0)
 
                 let destination = lastStopName(for: trip, line: feed.line)
-                departures.append(Departure(line: feed.line, destination: destination, minutes: minutes))
+                let arrivalDate = Date(timeIntervalSince1970: Double(arrivalTime))
+                departures.append(Departure(line: feed.line, destination: destination, minutes: minutes, arrivalDate: arrivalDate))
             }
         }
 
@@ -117,7 +119,7 @@ struct MTAFeedService {
                     for entity in message.entity {
                         guard entity.hasTripUpdate else { continue }
                         let trip = entity.tripUpdate
-                        guard trip.trip.routeID == feed.line else { continue }
+                        guard trip.trip.routeID.hasPrefix(feed.line) else { continue }
 
                         for stopTime in trip.stopTimeUpdate {
                             guard stopTime.stopID == feed.directionStopId else { continue }
@@ -131,11 +133,13 @@ struct MTAFeedService {
                                 continue
                             }
 
-                            let minutes = Int((Double(arrivalTime) - now) / 60.0)
-                            guard minutes >= 0 else { continue }
+                            let seconds = Double(arrivalTime) - now
+                            guard seconds >= 0 else { continue }
+                            let minutes = Int(seconds / 60.0)
 
                             let destination = lastStopName(for: trip, line: feed.line)
-                            departures.append(Departure(line: feed.line, destination: destination, minutes: minutes))
+                            let arrivalDate = Date(timeIntervalSince1970: Double(arrivalTime))
+                            departures.append(Departure(line: feed.line, destination: destination, minutes: minutes, arrivalDate: arrivalDate))
                         }
                     }
 
