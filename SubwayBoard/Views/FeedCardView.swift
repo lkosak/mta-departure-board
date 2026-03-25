@@ -1,8 +1,15 @@
+import ActivityKit
 import SwiftUI
 
 struct FeedCardView: View {
     let feed: WatchedFeed
     let departures: [Departure]
+
+    @EnvironmentObject private var liveActivityManager: LiveActivityManager
+
+    private var isLiveActive: Bool {
+        liveActivityManager.activeFeedIds.contains(feed.id)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -20,6 +27,24 @@ struct FeedCardView: View {
                 }
 
                 Spacer()
+
+                if ActivityAuthorizationInfo().areActivitiesEnabled {
+                    Button {
+                        Task {
+                            if isLiveActive {
+                                await liveActivityManager.stop(feedId: feed.id)
+                            } else {
+                                let cached = departures.map { CachedDeparture(from: $0) }
+                                liveActivityManager.start(feed: feed, departures: cached)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "dot.radiowaves.left.and.right")
+                            .font(.subheadline)
+                            .foregroundStyle(isLiveActive ? .green : .white.opacity(0.4))
+                    }
+                    .buttonStyle(.plain)
+                }
             }
 
             Divider()

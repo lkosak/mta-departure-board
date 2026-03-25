@@ -66,6 +66,7 @@ class AppStore: ObservableObject {
         }
         SharedDefaults.saveDepartures(cached)
         WidgetCenter.shared.reloadAllTimelines()
+        await LiveActivityManager.shared.updateAll(departures: cached)
     }
 
     func startAutoRefresh() {

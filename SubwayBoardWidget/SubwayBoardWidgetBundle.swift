@@ -5,5 +5,6 @@ import WidgetKit
 struct SubwayBoardWidgetBundle: WidgetBundle {
     var body: some Widget {
         SubwayBoardWidget()
+        SubwayLiveActivity()
     }
 }
