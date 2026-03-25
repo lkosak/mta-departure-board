@@ -49,8 +49,16 @@ jobs:
         run: |
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 
-          echo -n "$APP_PROFILE" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/app.mobileprovision
-          echo -n "$WIDGET_PROFILE" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/widget.mobileprovision
+          # Extract UUIDs from profiles and install with UUID as filename
+          echo -n "$APP_PROFILE" | base64 --decode > /tmp/app.mobileprovision
+          APP_UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(security cms -D -i /tmp/app.mobileprovision))
+          cp /tmp/app.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/$APP_UUID.mobileprovision
+          echo "APP_PROFILE_UUID=$APP_UUID" >> $GITHUB_ENV
+
+          echo -n "$WIDGET_PROFILE" | base64 --decode > /tmp/widget.mobileprovision
+          WIDGET_UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(security cms -D -i /tmp/widget.mobileprovision))
+          cp /tmp/widget.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/$WIDGET_UUID.mobileprovision
+          echo "WIDGET_PROFILE_UUID=$WIDGET_UUID" >> $GITHUB_ENV
 
       - name: Resolve Swift packages
         run: |
@@ -65,30 +73,30 @@ jobs:
             -scheme SubwayBoard \
             -destination 'generic/platform=iOS' \
             -archivePath $RUNNER_TEMP/SubwayBoard.xcarchive \
+            DEVELOPMENT_TEAM=86GPYNC4TS \
             CODE_SIGN_STYLE=Manual \
             CODE_SIGN_IDENTITY="Apple Distribution" \
-            PROVISIONING_PROFILE_SPECIFIER="" \
-            -allowProvisioningUpdates
+            CODE_SIGN_ALLOWED_FOR_APPS_ONLY=YES
 
       - name: Export IPA
         run: |
-          cat > $RUNNER_TEMP/ExportOptions.plist << 'PLIST'
+          cat > $RUNNER_TEMP/ExportOptions.plist << PLIST
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <plist version="1.0">
           <dict>
               <key>method</key>
               <string>app-store-connect</string>
-              <key>destination</key>
-              <string>upload</string>
+              <key>teamID</key>
+              <string>86GPYNC4TS</string>
               <key>signingStyle</key>
               <string>manual</string>
               <key>provisioningProfiles</key>
               <dict>
                   <key>io.lou.subwayboard</key>
-                  <string>app.mobileprovision</string>
+                  <string>${APP_PROFILE_UUID}</string>
                   <key>io.lou.subwayboard.widget</key>
-                  <string>widget.mobileprovision</string>
+                  <string>${WIDGET_PROFILE_UUID}</string>
               </dict>
           </dict>
           </plist>
@@ -105,8 +113,8 @@ jobs:
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
           ASC_API_KEY: ${{ secrets.ASC_API_KEY }}
         run: |
-          KEY_PATH=$RUNNER_TEMP/asc_key.p8
-          echo -n "$ASC_API_KEY" | base64 --decode > $KEY_PATH
+          mkdir -p ~/.private_keys
+          echo -n "$ASC_API_KEY" | base64 --decode > ~/.private_keys/AuthKey_${ASC_KEY_ID}.p8
 
           xcrun altool --upload-app \
             -f $RUNNER_TEMP/export/SubwayBoard.ipa \
