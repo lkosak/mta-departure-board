@@ -30,15 +30,16 @@ jobs:
         run: |
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
           CERT_PATH=$RUNNER_TEMP/certificate.p12
+          KEYCHAIN_PASSWORD="actions"
 
-          echo -n "$CERTIFICATE_P12" | base64 --decode -o $CERT_PATH
+          echo -n "$CERTIFICATE_P12" | base64 --decode > $CERT_PATH
 
-          security create-keychain -p "" $KEYCHAIN_PATH
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "" $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
 
           security import $CERT_PATH -P "$CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security set-key-partition-list -S apple-tool:,apple: -k "" $KEYCHAIN_PATH
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
 
       - name: Install provisioning profiles
@@ -48,8 +49,14 @@ jobs:
         run: |
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 
-          echo -n "$APP_PROFILE" | base64 --decode -o ~/Library/MobileDevice/Provisioning\ Profiles/app.mobileprovision
-          echo -n "$WIDGET_PROFILE" | base64 --decode -o ~/Library/MobileDevice/Provisioning\ Profiles/widget.mobileprovision
+          echo -n "$APP_PROFILE" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/app.mobileprovision
+          echo -n "$WIDGET_PROFILE" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/widget.mobileprovision
+
+      - name: Resolve Swift packages
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            -project SubwayBoard.xcodeproj \
+            -scheme SubwayBoard
 
       - name: Build archive
         run: |
@@ -60,11 +67,12 @@ jobs:
             -archivePath $RUNNER_TEMP/SubwayBoard.xcarchive \
             CODE_SIGN_STYLE=Manual \
             CODE_SIGN_IDENTITY="Apple Distribution" \
+            PROVISIONING_PROFILE_SPECIFIER="" \
             -allowProvisioningUpdates
 
       - name: Export IPA
         run: |
-          cat > $RUNNER_TEMP/ExportOptions.plist << 'EOF'
+          cat > $RUNNER_TEMP/ExportOptions.plist << 'PLIST'
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <plist version="1.0">
@@ -84,7 +92,7 @@ jobs:
               </dict>
           </dict>
           </plist>
-          EOF
+          PLIST
 
           xcodebuild -exportArchive \
             -archivePath $RUNNER_TEMP/SubwayBoard.xcarchive \
@@ -93,21 +101,15 @@ jobs:
 
       - name: Upload to App Store Connect
         env:
-          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
-          APP_STORE_CONNECT_API_KEY: ${{ secrets.ASC_API_KEY }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_API_KEY: ${{ secrets.ASC_API_KEY }}
         run: |
           KEY_PATH=$RUNNER_TEMP/asc_key.p8
-          echo -n "$APP_STORE_CONNECT_API_KEY" | base64 --decode -o $KEY_PATH
-
-          xcrun notarytool store-credentials "AC_PASSWORD" \
-            --apple-id "" \
-            --team-id "" \
-            --password "" 2>/dev/null || true
+          echo -n "$ASC_API_KEY" | base64 --decode > $KEY_PATH
 
           xcrun altool --upload-app \
             -f $RUNNER_TEMP/export/SubwayBoard.ipa \
             -t ios \
-            --apiKey "$APP_STORE_CONNECT_API_KEY_ID" \
-            --apiIssuer "$APP_STORE_CONNECT_API_ISSUER_ID" \
-            --private-key "$KEY_PATH"
+            --apiKey "$ASC_KEY_ID" \
+            --apiIssuer "$ASC_ISSUER_ID"
