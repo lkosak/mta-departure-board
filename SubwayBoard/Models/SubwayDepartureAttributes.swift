@@ -2,7 +2,7 @@ import ActivityKit
 import Foundation
 
 struct SubwayDepartureAttributes: ActivityAttributes {
-    struct ContentState: Codable, Hashable {
+    struct ContentState: Codable {
         let departures: [CachedDeparture]
         let updatedAt: Date
     }
