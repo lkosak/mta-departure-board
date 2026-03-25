@@ -1,0 +1,609 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02C7B9A32B4526771AB653F6 /* SubwayBoardWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D41F9CF7A4E5158A846A8D /* SubwayBoardWidget.swift */; };
+		12B246575CE4BF0909FB6035 /* WatchedFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BFE35CF8419CC6DE54E8E8 /* WatchedFeed.swift */; };
+		2385A10E01170CB4A5E2E328 /* MTAFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0E9917C257000924BC16DC /* MTAFeedService.swift */; };
+		389BB15A3D94B47CD86DEFEF /* GTFSStaticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB25CDCF38F696F7A340F1 /* GTFSStaticService.swift */; };
+		5B9E6392B7EA9364239ED191 /* StationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBD7ADD0D85EC66A871C2C9 /* StationPickerView.swift */; };
+		5BCB207DA71E3733ACE141BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2336EBF0814E925DC9DDC57 /* Assets.xcassets */; };
+		655D87FEC43F99C1741A2FAB /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA50897E1105666F61A2574 /* SwiftProtobuf */; };
+		6AFBF0EF12E30BDF010BC534 /* SubwayBoardWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B9BFFA2BC7EA71642F774C /* SubwayBoardWidgetBundle.swift */; };
+		7BDEB95E3FA0987B9389BD6B /* SubwayColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8AF35FE12D2179EBD64B8C /* SubwayColors.swift */; };
+		7C01FDAFED82D44ED992A1E4 /* nyct-subway.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D37B00D0B913B7D4A45C1DA /* nyct-subway.pb.swift */; };
+		7F16162D6DC48767E44D449A /* SubwayBoardWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D0D10A3540D355304F62EA /* SubwayBoardWidgetView.swift */; };
+		821D203BBA4D7807667DDD5F /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744925C7957D8EBE16B85775 /* Departure.swift */; };
+		8B996EE678D693B43F87DC2B /* WatchedFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BFE35CF8419CC6DE54E8E8 /* WatchedFeed.swift */; };
+		8CC3114B2265F0638D459059 /* FeedCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5327510875643310F1533A3 /* FeedCardView.swift */; };
+		8ED2851AA6B3FA60280DB9AE /* SharedDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47D878A829370093FD50590 /* SharedDefaults.swift */; };
+		9048D68A6B3254D45F6066BF /* SubwayBoardWidgetExtension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 52681ABC02AE2064FBF797BC /* SubwayBoardWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		917A6E669B64526F5E6C5EE9 /* DepartureBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C02EAF5D0094745087B0F4 /* DepartureBoardView.swift */; };
+		92CE3F87CDF8C54CE4144ABF /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83F14CA7C9468D62DEF074B /* AppStore.swift */; };
+		935B01DC090CC73323EACD58 /* SubwayBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5D3241D9F92E2CCCFD009A /* SubwayBoardApp.swift */; };
+		99BA176F5F66B15670EAC3DE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D74FE89C844AE71457A9F0B /* ContentView.swift */; };
+		9FE7162A5D3FB4FEE9EC02E6 /* SubwayColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8AF35FE12D2179EBD64B8C /* SubwayColors.swift */; };
+		A2288F6DDA55656B392F293B /* SharedDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47D878A829370093FD50590 /* SharedDefaults.swift */; };
+		AAB2FD8F2437D09F8D9D3AFF /* gtfs-realtime.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A039EC4D302E0DE1B99417 /* gtfs-realtime.pb.swift */; };
+		BE1FB8CEF7262B16331C5369 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2800E0E89DC084CC64A8DE19 /* Station.swift */; };
+		C7F43E300180C2F2B96381C3 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2800E0E89DC084CC64A8DE19 /* Station.swift */; };
+		E04FFF1A6CF3B456663F7161 /* LinePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01E0126B8920B495F37BF10 /* LinePickerView.swift */; };
+		FCFB6B892CC3AEB65FA357D5 /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744925C7957D8EBE16B85775 /* Departure.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		697B92B83CDF4D2C1416F33D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9181666D816F7E1BA5E7A6C3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4532CD6A9966826275015E3C;
+			remoteInfo = SubwayBoardWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4EBF04327FE643DF2D95CEA4 /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				9048D68A6B3254D45F6066BF /* SubwayBoardWidgetExtension.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		14C02EAF5D0094745087B0F4 /* DepartureBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureBoardView.swift; sourceTree = "<group>"; };
+		23D41F9CF7A4E5158A846A8D /* SubwayBoardWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayBoardWidget.swift; sourceTree = "<group>"; };
+		2800E0E89DC084CC64A8DE19 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
+		311E6DF31235DA5B16FAA995 /* SubwayBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubwayBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		47B9BFFA2BC7EA71642F774C /* SubwayBoardWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayBoardWidgetBundle.swift; sourceTree = "<group>"; };
+		4D37B00D0B913B7D4A45C1DA /* nyct-subway.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "nyct-subway.pb.swift"; sourceTree = "<group>"; };
+		50BFE35CF8419CC6DE54E8E8 /* WatchedFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedFeed.swift; sourceTree = "<group>"; };
+		52681ABC02AE2064FBF797BC /* SubwayBoardWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = SubwayBoardWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		58F4D9DB5C9C1BDB351D25C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5CBD7ADD0D85EC66A871C2C9 /* StationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationPickerView.swift; sourceTree = "<group>"; };
+		628A1A79EE83616269A96872 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		68A039EC4D302E0DE1B99417 /* gtfs-realtime.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "gtfs-realtime.pb.swift"; sourceTree = "<group>"; };
+		744925C7957D8EBE16B85775 /* Departure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Departure.swift; sourceTree = "<group>"; };
+		7B8AF35FE12D2179EBD64B8C /* SubwayColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayColors.swift; sourceTree = "<group>"; };
+		9429E9907FDB438F9148A0E7 /* SubwayBoardWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SubwayBoardWidget.entitlements; sourceTree = "<group>"; };
+		9D74FE89C844AE71457A9F0B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AD5D3241D9F92E2CCCFD009A /* SubwayBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayBoardApp.swift; sourceTree = "<group>"; };
+		C01E0126B8920B495F37BF10 /* LinePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinePickerView.swift; sourceTree = "<group>"; };
+		C2D0D10A3540D355304F62EA /* SubwayBoardWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayBoardWidgetView.swift; sourceTree = "<group>"; };
+		C4FB25CDCF38F696F7A340F1 /* GTFSStaticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTFSStaticService.swift; sourceTree = "<group>"; };
+		C5327510875643310F1533A3 /* FeedCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCardView.swift; sourceTree = "<group>"; };
+		D2336EBF0814E925DC9DDC57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EC0FC1EB580E81B41EE89F2C /* SubwayBoard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SubwayBoard.entitlements; sourceTree = "<group>"; };
+		ED0E9917C257000924BC16DC /* MTAFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTAFeedService.swift; sourceTree = "<group>"; };
+		F47D878A829370093FD50590 /* SharedDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDefaults.swift; sourceTree = "<group>"; };
+		F83F14CA7C9468D62DEF074B /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		351BBE750EF92BE44C3B58FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				655D87FEC43F99C1741A2FAB /* SwiftProtobuf in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0501C4370F1C1B26C7986F04 /* SubwayBoard */ = {
+			isa = PBXGroup;
+			children = (
+				D2336EBF0814E925DC9DDC57 /* Assets.xcassets */,
+				628A1A79EE83616269A96872 /* Info.plist */,
+				EC0FC1EB580E81B41EE89F2C /* SubwayBoard.entitlements */,
+				AD5D3241D9F92E2CCCFD009A /* SubwayBoardApp.swift */,
+				403DE150D672F56647FE9299 /* Generated */,
+				B173BAC3BF3F8D62219CA0DA /* Services */,
+				983C993FA516D380B1540F7B /* SharedModels */,
+				5C2F5307CEE49C179F665F23 /* Views */,
+			);
+			path = SubwayBoard;
+			sourceTree = "<group>";
+		};
+		403DE150D672F56647FE9299 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				68A039EC4D302E0DE1B99417 /* gtfs-realtime.pb.swift */,
+				4D37B00D0B913B7D4A45C1DA /* nyct-subway.pb.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
+		5C2F5307CEE49C179F665F23 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9D74FE89C844AE71457A9F0B /* ContentView.swift */,
+				14C02EAF5D0094745087B0F4 /* DepartureBoardView.swift */,
+				C5327510875643310F1533A3 /* FeedCardView.swift */,
+				C01E0126B8920B495F37BF10 /* LinePickerView.swift */,
+				5CBD7ADD0D85EC66A871C2C9 /* StationPickerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		82FE208B3A6A0F410992D6AF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				311E6DF31235DA5B16FAA995 /* SubwayBoard.app */,
+				52681ABC02AE2064FBF797BC /* SubwayBoardWidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8F75879FE348802296C956A2 = {
+			isa = PBXGroup;
+			children = (
+				0501C4370F1C1B26C7986F04 /* SubwayBoard */,
+				DB03D7317D4FC6DD7D4E769B /* SubwayBoardWidget */,
+				82FE208B3A6A0F410992D6AF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		983C993FA516D380B1540F7B /* SharedModels */ = {
+			isa = PBXGroup;
+			children = (
+				744925C7957D8EBE16B85775 /* Departure.swift */,
+				2800E0E89DC084CC64A8DE19 /* Station.swift */,
+				7B8AF35FE12D2179EBD64B8C /* SubwayColors.swift */,
+				50BFE35CF8419CC6DE54E8E8 /* WatchedFeed.swift */,
+			);
+			name = SharedModels;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B173BAC3BF3F8D62219CA0DA /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F83F14CA7C9468D62DEF074B /* AppStore.swift */,
+				C4FB25CDCF38F696F7A340F1 /* GTFSStaticService.swift */,
+				ED0E9917C257000924BC16DC /* MTAFeedService.swift */,
+				F47D878A829370093FD50590 /* SharedDefaults.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		DB03D7317D4FC6DD7D4E769B /* SubwayBoardWidget */ = {
+			isa = PBXGroup;
+			children = (
+				58F4D9DB5C9C1BDB351D25C6 /* Info.plist */,
+				9429E9907FDB438F9148A0E7 /* SubwayBoardWidget.entitlements */,
+				23D41F9CF7A4E5158A846A8D /* SubwayBoardWidget.swift */,
+				47B9BFFA2BC7EA71642F774C /* SubwayBoardWidgetBundle.swift */,
+				C2D0D10A3540D355304F62EA /* SubwayBoardWidgetView.swift */,
+			);
+			path = SubwayBoardWidget;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4532CD6A9966826275015E3C /* SubwayBoardWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2502C118EB65CE90A9B2857E /* Build configuration list for PBXNativeTarget "SubwayBoardWidgetExtension" */;
+			buildPhases = (
+				51217E5E8AADC733F4355363 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SubwayBoardWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = SubwayBoardWidgetExtension;
+			productReference = 52681ABC02AE2064FBF797BC /* SubwayBoardWidgetExtension.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
+		993794BD9696CA0ABAB069C5 /* SubwayBoard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA64BC344F931FDF6889E5EF /* Build configuration list for PBXNativeTarget "SubwayBoard" */;
+			buildPhases = (
+				4C56B124C423C975311E4D8B /* Sources */,
+				486B329485D1DC569D63BF9C /* Resources */,
+				351BBE750EF92BE44C3B58FC /* Frameworks */,
+				4EBF04327FE643DF2D95CEA4 /* Embed ExtensionKit Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				71AE7D7C3DFA649FF3AACFA0 /* PBXTargetDependency */,
+			);
+			name = SubwayBoard;
+			packageProductDependencies = (
+				9FA50897E1105666F61A2574 /* SwiftProtobuf */,
+			);
+			productName = SubwayBoard;
+			productReference = 311E6DF31235DA5B16FAA995 /* SubwayBoard.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9181666D816F7E1BA5E7A6C3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = DAD05E5116FA3D1D563C47BA /* Build configuration list for PBXProject "SubwayBoard" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 8F75879FE348802296C956A2;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				26F7C9ACD991EC004A6755FB /* XCRemoteSwiftPackageReference "swift-protobuf" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 82FE208B3A6A0F410992D6AF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				993794BD9696CA0ABAB069C5 /* SubwayBoard */,
+				4532CD6A9966826275015E3C /* SubwayBoardWidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		486B329485D1DC569D63BF9C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BCB207DA71E3733ACE141BC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4C56B124C423C975311E4D8B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92CE3F87CDF8C54CE4144ABF /* AppStore.swift in Sources */,
+				99BA176F5F66B15670EAC3DE /* ContentView.swift in Sources */,
+				FCFB6B892CC3AEB65FA357D5 /* Departure.swift in Sources */,
+				917A6E669B64526F5E6C5EE9 /* DepartureBoardView.swift in Sources */,
+				8CC3114B2265F0638D459059 /* FeedCardView.swift in Sources */,
+				389BB15A3D94B47CD86DEFEF /* GTFSStaticService.swift in Sources */,
+				E04FFF1A6CF3B456663F7161 /* LinePickerView.swift in Sources */,
+				2385A10E01170CB4A5E2E328 /* MTAFeedService.swift in Sources */,
+				A2288F6DDA55656B392F293B /* SharedDefaults.swift in Sources */,
+				BE1FB8CEF7262B16331C5369 /* Station.swift in Sources */,
+				5B9E6392B7EA9364239ED191 /* StationPickerView.swift in Sources */,
+				935B01DC090CC73323EACD58 /* SubwayBoardApp.swift in Sources */,
+				9FE7162A5D3FB4FEE9EC02E6 /* SubwayColors.swift in Sources */,
+				8B996EE678D693B43F87DC2B /* WatchedFeed.swift in Sources */,
+				AAB2FD8F2437D09F8D9D3AFF /* gtfs-realtime.pb.swift in Sources */,
+				7C01FDAFED82D44ED992A1E4 /* nyct-subway.pb.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51217E5E8AADC733F4355363 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				821D203BBA4D7807667DDD5F /* Departure.swift in Sources */,
+				8ED2851AA6B3FA60280DB9AE /* SharedDefaults.swift in Sources */,
+				C7F43E300180C2F2B96381C3 /* Station.swift in Sources */,
+				02C7B9A32B4526771AB653F6 /* SubwayBoardWidget.swift in Sources */,
+				6AFBF0EF12E30BDF010BC534 /* SubwayBoardWidgetBundle.swift in Sources */,
+				7F16162D6DC48767E44D449A /* SubwayBoardWidgetView.swift in Sources */,
+				7BDEB95E3FA0987B9389BD6B /* SubwayColors.swift in Sources */,
+				12B246575CE4BF0909FB6035 /* WatchedFeed.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		71AE7D7C3DFA649FF3AACFA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4532CD6A9966826275015E3C /* SubwayBoardWidgetExtension */;
+			targetProxy = 697B92B83CDF4D2C1416F33D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		3F5EF3A1031E2326579D40F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SubwayBoardWidget/SubwayBoardWidget.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 86GPYNC4TS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SubwayBoardWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "SubwayBoard Widget";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard.widget;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "App Store Connect - MTA Departure Board Widget";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D3B9DAE6ECA61FF9F5E72BF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SubwayBoardWidget/SubwayBoardWidget.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 86GPYNC4TS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SubwayBoardWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "SubwayBoard Widget";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard.widget;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "App Store Connect - MTA Departure Board Widget";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D5316488412009BEF50A20AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SubwayBoard/SubwayBoard.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 86GPYNC4TS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SubwayBoard/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "App Store Connect - MTA Departure Board";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D982FA936495B60CA07F5693 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SubwayBoard/SubwayBoard.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 86GPYNC4TS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SubwayBoard/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "App Store Connect - MTA Departure Board";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E26BAEAEB6D7F2A7B386F8E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E8895A5E4CDD51E5D69D5C50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2502C118EB65CE90A9B2857E /* Build configuration list for PBXNativeTarget "SubwayBoardWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F5EF3A1031E2326579D40F7 /* Debug */,
+				D3B9DAE6ECA61FF9F5E72BF0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CA64BC344F931FDF6889E5EF /* Build configuration list for PBXNativeTarget "SubwayBoard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5316488412009BEF50A20AE /* Debug */,
+				D982FA936495B60CA07F5693 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DAD05E5116FA3D1D563C47BA /* Build configuration list for PBXProject "SubwayBoard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E26BAEAEB6D7F2A7B386F8E3 /* Debug */,
+				E8895A5E4CDD51E5D69D5C50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		26F7C9ACD991EC004A6755FB /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.28.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9FA50897E1105666F61A2574 /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 26F7C9ACD991EC004A6755FB /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 9181666D816F7E1BA5E7A6C3 /* Project object */;
+}
