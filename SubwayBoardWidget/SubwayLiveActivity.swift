@@ -66,11 +66,12 @@ struct LiveActivityLockScreenView: View {
                         .foregroundStyle(.gray)
                 }
                 Spacer()
-                // Relative timestamp updates automatically
-                Text(context.state.updatedAt, style: .relative)
-                    .font(.caption2)
-                    .foregroundStyle(.gray)
-                    .multilineTextAlignment(.trailing)
+                if let next = context.state.departures.first(where: { $0.arrivalTime > .now }) {
+                    Text(next.arrivalTime, style: .timer)
+                        .font(.caption2)
+                        .foregroundStyle(.gray)
+                        .multilineTextAlignment(.trailing)
+                }
             }
 
             Divider()
