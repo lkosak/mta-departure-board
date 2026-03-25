@@ -49,7 +49,6 @@ jobs:
         run: |
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 
-          # Extract UUIDs from profiles and install with UUID as filename
           echo -n "$APP_PROFILE" | base64 --decode > /tmp/app.mobileprovision
           APP_UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(security cms -D -i /tmp/app.mobileprovision))
           cp /tmp/app.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/$APP_UUID.mobileprovision
@@ -76,9 +75,22 @@ jobs:
             DEVELOPMENT_TEAM=86GPYNC4TS \
             CODE_SIGN_STYLE=Manual \
             CODE_SIGN_IDENTITY="Apple Distribution" \
-            CODE_SIGN_ALLOWED_FOR_APPS_ONLY=YES
+            CODE_SIGN_ALLOWED_FOR_APPS_ONLY=YES \
+            SB_APP_PP="$APP_PROFILE_UUID" \
+            SB_WIDGET_PP="$WIDGET_PROFILE_UUID"
 
-      - name: Export IPA
+      - name: Setup App Store Connect API key
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_API_KEY: ${{ secrets.ASC_API_KEY }}
+        run: |
+          mkdir -p ~/.private_keys
+          echo -n "$ASC_API_KEY" | base64 --decode > ~/.private_keys/AuthKey_${ASC_KEY_ID}.p8
+
+      - name: Export and upload to TestFlight
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
         run: |
           cat > $RUNNER_TEMP/ExportOptions.plist << PLIST
           <?xml version="1.0" encoding="UTF-8"?>
@@ -91,6 +103,8 @@ jobs:
               <string>86GPYNC4TS</string>
               <key>signingStyle</key>
               <string>manual</string>
+              <key>destination</key>
+              <string>upload</string>
               <key>provisioningProfiles</key>
               <dict>
                   <key>io.lou.subwayboard</key>
@@ -105,19 +119,7 @@ jobs:
           xcodebuild -exportArchive \
             -archivePath $RUNNER_TEMP/SubwayBoard.xcarchive \
             -exportPath $RUNNER_TEMP/export \
-            -exportOptionsPlist $RUNNER_TEMP/ExportOptions.plist
-
-      - name: Upload to App Store Connect
-        env:
-          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
-          ASC_API_KEY: ${{ secrets.ASC_API_KEY }}
-        run: |
-          mkdir -p ~/.private_keys
-          echo -n "$ASC_API_KEY" | base64 --decode > ~/.private_keys/AuthKey_${ASC_KEY_ID}.p8
-
-          xcrun altool --upload-app \
-            -f $RUNNER_TEMP/export/SubwayBoard.ipa \
-            -t ios \
-            --apiKey "$ASC_KEY_ID" \
-            --apiIssuer "$ASC_ISSUER_ID"
+            -exportOptionsPlist $RUNNER_TEMP/ExportOptions.plist \
+            -authenticationKeyPath ~/.private_keys/AuthKey_${ASC_KEY_ID}.p8 \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID"

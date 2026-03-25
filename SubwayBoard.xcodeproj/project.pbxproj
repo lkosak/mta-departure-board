@@ -64,7 +64,7 @@
 		14C02EAF5D0094745087B0F4 /* DepartureBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureBoardView.swift; sourceTree = "<group>"; };
 		23D41F9CF7A4E5158A846A8D /* SubwayBoardWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayBoardWidget.swift; sourceTree = "<group>"; };
 		2800E0E89DC084CC64A8DE19 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
-		311E6DF31235DA5B16FAA995 /* SubwayBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubwayBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		311E6DF31235DA5B16FAA995 /* SubwayBoard.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SubwayBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47B9BFFA2BC7EA71642F774C /* SubwayBoardWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayBoardWidgetBundle.swift; sourceTree = "<group>"; };
 		4D37B00D0B913B7D4A45C1DA /* nyct-subway.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "nyct-subway.pb.swift"; sourceTree = "<group>"; };
 		50BFE35CF8419CC6DE54E8E8 /* WatchedFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedFeed.swift; sourceTree = "<group>"; };
@@ -240,6 +240,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = DAD05E5116FA3D1D563C47BA /* Build configuration list for PBXProject "SubwayBoard" */;
 			developmentRegion = en;
@@ -329,11 +331,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SubwayBoardWidget/SubwayBoardWidget.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 86GPYNC4TS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SubwayBoardWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "SubwayBoard Widget";
@@ -343,8 +341,6 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard.widget;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "App Store Connect - MTA Departure Board Widget";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -354,11 +350,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SubwayBoardWidget/SubwayBoardWidget.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 86GPYNC4TS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SubwayBoardWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "SubwayBoard Widget";
@@ -368,8 +360,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard.widget;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "App Store Connect - MTA Departure Board Widget";
+				PROVISIONING_PROFILE = "$(SB_WIDGET_PP)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -381,10 +372,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SubwayBoard/SubwayBoard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 86GPYNC4TS;
+				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SubwayBoard/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -396,9 +384,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "App Store Connect - MTA Departure Board";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -411,10 +398,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SubwayBoard/SubwayBoard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 86GPYNC4TS;
+				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SubwayBoard/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -426,9 +410,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "App Store Connect - MTA Departure Board";
+				PROVISIONING_PROFILE = "$(SB_APP_PP)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
