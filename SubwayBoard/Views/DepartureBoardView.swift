@@ -23,6 +23,9 @@ struct DepartureBoardView: View {
                     store.moveFeeds(from: from, to: to)
                 }
             }
+            .refreshable {
+                await store.refreshDepartures()
+            }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
             .background(Color.black)
