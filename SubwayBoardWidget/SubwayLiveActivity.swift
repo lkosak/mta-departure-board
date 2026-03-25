@@ -66,11 +66,6 @@ struct LiveActivityLockScreenView: View {
                         .foregroundStyle(.gray)
                 }
                 Spacer()
-                // Relative timestamp updates automatically
-                Text(context.state.updatedAt, style: .relative)
-                    .font(.caption2)
-                    .foregroundStyle(.gray)
-                    .multilineTextAlignment(.trailing)
             }
 
             Divider()
