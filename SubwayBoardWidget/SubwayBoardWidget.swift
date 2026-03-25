@@ -20,7 +20,7 @@ struct SubwayBoardProvider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<DepartureEntry>) -> Void) {
         let entry = makeEntry()
         // Refresh in 60 seconds
-        let nextUpdate = Calendar.current.date(byAdding: .second, value: 60, to: .now)!
+        let nextUpdate = Calendar.current.date(byAdding: .second, value: 30, to: .now)!
         let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
         completion(timeline)
     }
