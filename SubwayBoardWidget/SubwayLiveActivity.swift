@@ -66,12 +66,6 @@ struct LiveActivityLockScreenView: View {
                         .foregroundStyle(.gray)
                 }
                 Spacer()
-                if let next = context.state.departures.first(where: { $0.arrivalTime > .now }) {
-                    Text(next.arrivalTime, style: .timer)
-                        .font(.caption2)
-                        .foregroundStyle(.gray)
-                        .multilineTextAlignment(.trailing)
-                }
             }
 
             Divider()
