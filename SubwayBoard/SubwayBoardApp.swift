@@ -18,7 +18,7 @@ struct SubwayBoardApp: App {
                 .preferredColorScheme(.dark)
         }
         .onChange(of: scenePhase) { _, newPhase in
-            if newPhase == .background {
+            if newPhase == .background || newPhase == .active {
                 scheduleAppRefresh()
             }
         }
@@ -31,7 +31,7 @@ struct SubwayBoardApp: App {
 
 private func scheduleAppRefresh() {
     let request = BGAppRefreshTaskRequest(identifier: refreshTaskIdentifier)
-    request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
+    request.earliestBeginDate = Date(timeIntervalSinceNow: 5 * 60)
     try? BGTaskScheduler.shared.submit(request)
 }
 
