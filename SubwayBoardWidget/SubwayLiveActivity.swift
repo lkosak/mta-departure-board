@@ -35,10 +35,9 @@ struct SubwayLiveActivity: Widget {
                     .padding(.leading, 4)
             } compactTrailing: {
                 if let next = context.state.departures.first(where: { $0.arrivalTime > .now }) {
-                    Text(next.arrivalTime, style: .timer)
+                    Text(next.minutes == 0 ? "now" : "\(next.minutes)m")
                         .font(.caption.bold())
-                        .foregroundStyle(.white)
-                        .multilineTextAlignment(.trailing)
+                        .foregroundStyle(next.minutes == 0 ? .green : .white)
                         .frame(minWidth: 28, alignment: .trailing)
                         .padding(.trailing, 4)
                 }
@@ -99,11 +98,17 @@ private struct LiveDepartureList: View {
                         .foregroundStyle(.white.opacity(0.8))
                         .lineLimit(1)
                     Spacer()
-                    Text(dep.arrivalTime, style: .relative)
-                        .font(.caption.bold())
-                        .foregroundStyle(dep.minutes > 20 ? .gray : .white)
-                        .multilineTextAlignment(.trailing)
-                        .frame(width: 52, alignment: .trailing)
+                    Group {
+                        if dep.minutes == 0 {
+                            Text("arriving")
+                                .foregroundStyle(.green)
+                        } else {
+                            Text("\(dep.minutes) min")
+                                .foregroundStyle(dep.minutes > 20 ? .gray : .white)
+                        }
+                    }
+                    .font(.caption.bold())
+                    .frame(width: 52, alignment: .trailing)
                 }
             }
         }
