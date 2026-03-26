@@ -26,15 +26,25 @@ struct SubwayLiveActivity: Widget {
                     .padding(.trailing, 4)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    LiveDepartureList(departures: context.state.departures, maxRows: 3)
-                        .padding(.horizontal, 4)
-                        .padding(.bottom, 4)
+                    LiveDepartureList(
+                        departures: context.state.departures,
+                        maxRows: 3,
+                        isStale: context.isStale
+                    )
+                    .padding(.horizontal, 4)
+                    .padding(.bottom, 4)
                 }
             } compactLeading: {
                 WidgetLineBullet(line: context.attributes.feed.line, size: 22)
                     .padding(.leading, 4)
             } compactTrailing: {
-                if let next = context.state.departures.first(where: { $0.arrivalTime > .now }) {
+                if context.isStale {
+                    Text("--")
+                        .font(.caption.bold())
+                        .foregroundStyle(.gray)
+                        .frame(minWidth: 28, alignment: .trailing)
+                        .padding(.trailing, 4)
+                } else if let next = context.state.departures.first(where: { $0.arrivalTime > .now }) {
                     Text(next.minutes == 0 ? "now" : "\(next.minutes)m")
                         .font(.caption.bold())
                         .foregroundStyle(next.minutes == 0 ? .green : .white)
@@ -66,12 +76,21 @@ struct LiveActivityLockScreenView: View {
                         .foregroundStyle(.gray)
                 }
                 Spacer()
+                if context.isStale {
+                    Text("Updating\u{2026}")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
             }
 
             Divider()
                 .background(Color.gray.opacity(0.4))
 
-            LiveDepartureList(departures: context.state.departures, maxRows: 4)
+            LiveDepartureList(
+                departures: context.state.departures,
+                maxRows: 4,
+                isStale: context.isStale
+            )
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
@@ -83,11 +102,16 @@ struct LiveActivityLockScreenView: View {
 private struct LiveDepartureList: View {
     let departures: [CachedDeparture]
     let maxRows: Int
+    var isStale: Bool = false
 
     var body: some View {
         let upcoming = Array(departures.filter { $0.arrivalTime > .now }.prefix(maxRows))
-        if upcoming.isEmpty {
+        if upcoming.isEmpty && !isStale {
             Text("No upcoming trains")
+                .font(.caption)
+                .foregroundStyle(.gray)
+        } else if upcoming.isEmpty && isStale {
+            Text("Waiting for update\u{2026}")
                 .font(.caption)
                 .foregroundStyle(.gray)
         } else {
@@ -95,11 +119,14 @@ private struct LiveDepartureList: View {
                 HStack {
                     Text(dep.destination)
                         .font(.caption)
-                        .foregroundStyle(.white.opacity(0.8))
+                        .foregroundStyle(.white.opacity(isStale ? 0.4 : 0.8))
                         .lineLimit(1)
                     Spacer()
                     Group {
-                        if dep.minutes == 0 {
+                        if isStale {
+                            Text("--")
+                                .foregroundStyle(.gray)
+                        } else if dep.minutes == 0 {
                             Text("arriving")
                                 .foregroundStyle(.green)
                         } else {

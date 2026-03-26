@@ -63,3 +63,8 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# Server
+server/node_modules/
+server/.env
+server/AuthKey*.p8

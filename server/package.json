@@ -1,0 +1,17 @@
+{
+  "name": "subwayboard-push-server",
+  "version": "1.0.0",
+  "description": "ActivityKit push server for SubwayBoard",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "protobufjs": "^7.4.0",
+    "adm-zip": "^0.5.16"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
