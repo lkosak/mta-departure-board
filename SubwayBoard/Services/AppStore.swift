@@ -1,3 +1,5 @@
+import Combine
+import CoreLocation
 import Foundation
 import SwiftUI
 import WidgetKit
@@ -11,10 +13,25 @@ class AppStore: ObservableObject {
     @Published var isLoadingDepartures = false
     @Published var error: String?
 
+    // Nearest station
+    let locationService = LocationService()
+    @Published var nearestStation: Station?
+    @Published var nearestStationDistance: Double?
+    @Published var nearestStationFeeds: [WatchedFeed] = []
+    @Published var nearestStationDepartures: [UUID: [Departure]] = [:]
+
     private var refreshTimer: Timer?
+    private var locationCancellable: AnyCancellable?
+
+    private static let lineOrder = ["1","2","3","4","5","6","7","A","C","E","B","D","F","M","G","J","Z","L","N","Q","R","W","S"]
 
     init() {
         watchedFeeds = SharedDefaults.loadFeeds()
+        locationCancellable = locationService.$location
+            .compactMap { $0 }
+            .sink { [weak self] location in
+                self?.updateNearestStation(for: location)
+            }
     }
 
     func loadStations() async {
@@ -23,6 +40,10 @@ class AppStore: ObservableObject {
 
         do {
             stations = try await GTFSStaticService.shared.loadStations()
+            // If we already have a location, find nearest now that stations are loaded
+            if let location = locationService.location {
+                updateNearestStation(for: location)
+            }
         } catch {
             self.error = "Failed to load stations: \(error.localizedDescription)"
         }
@@ -47,7 +68,7 @@ class AppStore: ObservableObject {
     }
 
     func refreshDepartures() async {
-        guard !watchedFeeds.isEmpty else { return }
+        guard !watchedFeeds.isEmpty || !nearestStationFeeds.isEmpty else { return }
         isLoadingDepartures = true
         defer { isLoadingDepartures = false }
 
@@ -56,7 +77,17 @@ class AppStore: ObservableObject {
             try? await GTFSStaticService.shared.loadStations()
         }
 
-        departures = await MTAFeedService.fetchDeparturesForAllFeeds(watchedFeeds)
+        async let userFeedResults = watchedFeeds.isEmpty
+            ? [UUID: [Departure]]()
+            : MTAFeedService.fetchDeparturesForAllFeeds(watchedFeeds)
+        async let nearestResults = nearestStationFeeds.isEmpty
+            ? [UUID: [Departure]]()
+            : MTAFeedService.fetchDeparturesForAllFeeds(nearestStationFeeds)
+
+        let (userDeps, nearestDeps) = await (userFeedResults, nearestResults)
+
+        departures = userDeps
+        nearestStationDepartures = nearestDeps
 
         // Cache departures for widget
         let now = Date()
@@ -82,5 +113,54 @@ class AppStore: ObservableObject {
     func stopAutoRefresh() {
         refreshTimer?.invalidate()
         refreshTimer = nil
+    }
+
+    // MARK: - Nearest Station
+
+    private func updateNearestStation(for location: CLLocation) {
+        guard !stations.isEmpty else { return }
+
+        let nearest = stations
+            .filter { $0.latitude != nil && $0.longitude != nil }
+            .min {
+                let a = CLLocation(latitude: $0.latitude!, longitude: $0.longitude!)
+                let b = CLLocation(latitude: $1.latitude!, longitude: $1.longitude!)
+                return location.distance(from: a) < location.distance(from: b)
+            }
+
+        guard let nearest else { return }
+        let stationLocation = CLLocation(latitude: nearest.latitude!, longitude: nearest.longitude!)
+        nearestStationDistance = location.distance(from: stationLocation)
+
+        if nearest.id != nearestStation?.id {
+            nearestStation = nearest
+            nearestStationFeeds = buildFeeds(for: nearest)
+            nearestStationDepartures = [:]
+            Task { await refreshNearestStationDepartures() }
+        }
+    }
+
+    private func buildFeeds(for station: Station) -> [WatchedFeed] {
+        var feeds: [WatchedFeed] = []
+        let orderedLines = Self.lineOrder.filter { station.lines.contains($0) }
+        for line in orderedLines {
+            guard let prefix = station.lineToStopPrefix[line] else { continue }
+            let northId = prefix + "N"
+            let southId = prefix + "S"
+            if station.stopIds.contains(northId) {
+                feeds.append(WatchedFeed(id: UUID(), stationId: station.id, stationName: station.name,
+                                         line: line, directionStopId: northId, direction: .uptown))
+            }
+            if station.stopIds.contains(southId) {
+                feeds.append(WatchedFeed(id: UUID(), stationId: station.id, stationName: station.name,
+                                         line: line, directionStopId: southId, direction: .downtown))
+            }
+        }
+        return feeds
+    }
+
+    private func refreshNearestStationDepartures() async {
+        guard !nearestStationFeeds.isEmpty else { return }
+        nearestStationDepartures = await MTAFeedService.fetchDeparturesForAllFeeds(nearestStationFeeds)
     }
 }

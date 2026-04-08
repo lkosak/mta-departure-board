@@ -182,12 +182,15 @@ actor GTFSStaticService {
               let nameIdx = cols.firstIndex(of: "stop_name")
         else { return [] }
 
-        // Also look for parent_station column
+        // Also look for parent_station and coordinate columns
         let parentIdx = cols.firstIndex(of: "parent_station")
+        let latIdx = cols.firstIndex(of: "stop_lat")
+        let lonIdx = cols.firstIndex(of: "stop_lon")
 
-        // First pass: build parent→name map and collect directional stops grouped by parent
+        // First pass: build parent→name map, collect directional stops, and gather coordinates
         var parentNames: [String: String] = [:]  // parentId → name
         var parentStopIds: [String: Set<String>] = [:]  // parentId → set of directional stop IDs
+        var parentCoords: [String: [(Double, Double)]] = [:]  // parentId → [(lat, lon)]
 
         for line in lines.dropFirst() where !line.isEmpty {
             let fields = parseCSVLine(line)
@@ -196,6 +199,9 @@ actor GTFSStaticService {
             let name = fields[nameIdx]
             let parent = (parentIdx != nil && parentIdx! < fields.count) ? fields[parentIdx!] : ""
 
+            let lat = latIdx.flatMap { $0 < fields.count ? Double(fields[$0]) : nil }
+            let lon = lonIdx.flatMap { $0 < fields.count ? Double(fields[$0]) : nil }
+
             if stopId.hasSuffix("N") || stopId.hasSuffix("S") {
                 // Directional stop — group under its parent (or its own prefix if no parent)
                 let groupKey = parent.isEmpty ? String(stopId.dropLast()) : parent
@@ -203,9 +209,15 @@ actor GTFSStaticService {
                 if parentNames[groupKey] == nil {
                     parentNames[groupKey] = name
                 }
+                if let lat, let lon {
+                    parentCoords[groupKey, default: []].append((lat, lon))
+                }
             } else if parent.isEmpty {
-                // This is a parent stop itself — record its name
+                // This is a parent stop itself — record its name and coordinates
                 parentNames[stopId] = name
+                if let lat, let lon {
+                    parentCoords[stopId, default: []].append((lat, lon))
+                }
             }
         }
 
@@ -213,20 +225,32 @@ actor GTFSStaticService {
         var stationsList = parentStopIds.map { parentId, stopIds -> Station in
             let name = parentNames[parentId] ?? parentId
 
-            // Collect routes from all prefixes in this group
+            // Collect routes from all prefixes in this group, and map line → stop prefix
             var stationRoutes: Set<String> = []
+            var lineToStopPrefix: [String: String] = [:]
             let prefixes = Set(stopIds.map { String($0.dropLast()) })
             for prefix in prefixes {
                 if let r = stopRoutes[prefix] {
                     stationRoutes.formUnion(r)
+                    for route in r {
+                        lineToStopPrefix[route] = prefix
+                    }
                 }
             }
+
+            // Average coordinates across all directional stops
+            let coords = parentCoords[parentId] ?? []
+            let latitude = coords.isEmpty ? nil : coords.map(\.0).reduce(0, +) / Double(coords.count)
+            let longitude = coords.isEmpty ? nil : coords.map(\.1).reduce(0, +) / Double(coords.count)
 
             return Station(
                 id: parentId,
                 name: name,
                 lines: stationRoutes.sorted(),
-                stopIds: stopIds.sorted()
+                stopIds: stopIds.sorted(),
+                latitude: latitude,
+                longitude: longitude,
+                lineToStopPrefix: lineToStopPrefix
             )
         }
 
@@ -240,7 +264,10 @@ actor GTFSStaticService {
                     id: station.id,
                     name: name + lineSuffix,
                     lines: station.lines,
-                    stopIds: station.stopIds
+                    stopIds: station.stopIds,
+                    latitude: station.latitude,
+                    longitude: station.longitude,
+                    lineToStopPrefix: station.lineToStopPrefix
                 )
             }
         }
