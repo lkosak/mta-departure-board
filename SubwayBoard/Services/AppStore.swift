@@ -77,7 +77,7 @@ class AppStore: ObservableObject {
         defer { isLoadingDepartures = false }
 
         if stations.isEmpty {
-            try? await GTFSStaticService.shared.loadStations()
+            await loadStations()
         }
 
         let nearbyFeeds = nearbyStations.flatMap(\.feeds)
