@@ -4,6 +4,12 @@ import Foundation
 import SwiftUI
 import WidgetKit
 
+struct NearbyStation {
+    let station: Station
+    let distance: Double  // meters
+    let feeds: [WatchedFeed]
+}
+
 @MainActor
 class AppStore: ObservableObject {
     @Published var stations: [Station] = []
@@ -13,24 +19,23 @@ class AppStore: ObservableObject {
     @Published var isLoadingDepartures = false
     @Published var error: String?
 
-    // Nearest station
+    // Nearby stations (within ~1/4 mile)
     let locationService = LocationService()
-    @Published var nearestStation: Station?
-    @Published var nearestStationDistance: Double?
-    @Published var nearestStationFeeds: [WatchedFeed] = []
-    @Published var nearestStationDepartures: [UUID: [Departure]] = [:]
+    @Published var nearbyStations: [NearbyStation] = []
+    @Published var nearbyStationDepartures: [UUID: [Departure]] = [:]
+
+    private static let nearbyRadiusMeters: Double = 402  // 1/4 mile
+    private static let lineOrder = ["1","2","3","4","5","6","7","A","C","E","B","D","F","M","G","J","Z","L","N","Q","R","W","S"]
 
     private var refreshTimer: Timer?
     private var locationCancellable: AnyCancellable?
-
-    private static let lineOrder = ["1","2","3","4","5","6","7","A","C","E","B","D","F","M","G","J","Z","L","N","Q","R","W","S"]
 
     init() {
         watchedFeeds = SharedDefaults.loadFeeds()
         locationCancellable = locationService.$location
             .compactMap { $0 }
             .sink { [weak self] location in
-                self?.updateNearestStation(for: location)
+                self?.updateNearbyStations(for: location)
             }
     }
 
@@ -40,9 +45,8 @@ class AppStore: ObservableObject {
 
         do {
             stations = try await GTFSStaticService.shared.loadStations()
-            // If we already have a location, find nearest now that stations are loaded
             if let location = locationService.location {
-                updateNearestStation(for: location)
+                updateNearbyStations(for: location)
             }
         } catch {
             self.error = "Failed to load stations: \(error.localizedDescription)"
@@ -68,26 +72,27 @@ class AppStore: ObservableObject {
     }
 
     func refreshDepartures() async {
-        guard !watchedFeeds.isEmpty || !nearestStationFeeds.isEmpty else { return }
+        guard !watchedFeeds.isEmpty || !nearbyStations.isEmpty else { return }
         isLoadingDepartures = true
         defer { isLoadingDepartures = false }
 
-        // Ensure station name map is populated (needed for destination lookups)
         if stations.isEmpty {
             try? await GTFSStaticService.shared.loadStations()
         }
 
+        let nearbyFeeds = nearbyStations.flatMap(\.feeds)
+
         async let userFeedResults = watchedFeeds.isEmpty
             ? [UUID: [Departure]]()
             : MTAFeedService.fetchDeparturesForAllFeeds(watchedFeeds)
-        async let nearestResults = nearestStationFeeds.isEmpty
+        async let nearbyResults = nearbyFeeds.isEmpty
             ? [UUID: [Departure]]()
-            : MTAFeedService.fetchDeparturesForAllFeeds(nearestStationFeeds)
+            : MTAFeedService.fetchDeparturesForAllFeeds(nearbyFeeds)
 
-        let (userDeps, nearestDeps) = await (userFeedResults, nearestResults)
+        let (userDeps, nearbyDeps) = await (userFeedResults, nearbyResults)
 
         departures = userDeps
-        nearestStationDepartures = nearestDeps
+        nearbyStationDepartures = nearbyDeps
 
         // Cache departures for widget
         let now = Date()
@@ -115,28 +120,38 @@ class AppStore: ObservableObject {
         refreshTimer = nil
     }
 
-    // MARK: - Nearest Station
+    // MARK: - Nearby Stations
 
-    private func updateNearestStation(for location: CLLocation) {
+    private func updateNearbyStations(for location: CLLocation) {
         guard !stations.isEmpty else { return }
 
-        let nearest = stations
+        let candidates: [(station: Station, distance: Double)] = stations
             .filter { $0.latitude != nil && $0.longitude != nil }
-            .min {
-                let a = CLLocation(latitude: $0.latitude!, longitude: $0.longitude!)
-                let b = CLLocation(latitude: $1.latitude!, longitude: $1.longitude!)
-                return location.distance(from: a) < location.distance(from: b)
+            .compactMap { station in
+                let stationLoc = CLLocation(latitude: station.latitude!, longitude: station.longitude!)
+                let distance = location.distance(from: stationLoc)
+                return distance <= Self.nearbyRadiusMeters ? (station, distance) : nil
             }
+            .sorted { $0.distance < $1.distance }
 
-        guard let nearest else { return }
-        let stationLocation = CLLocation(latitude: nearest.latitude!, longitude: nearest.longitude!)
-        nearestStationDistance = location.distance(from: stationLocation)
+        let newIds = Set(candidates.map { $0.station.id })
+        let oldIds = Set(nearbyStations.map { $0.station.id })
 
-        if nearest.id != nearestStation?.id {
-            nearestStation = nearest
-            nearestStationFeeds = buildFeeds(for: nearest)
-            nearestStationDepartures = [:]
-            Task { await refreshNearestStationDepartures() }
+        if newIds != oldIds {
+            // Station set changed — rebuild feeds and refetch departures
+            nearbyStations = candidates.map { pair in
+                NearbyStation(station: pair.station, distance: pair.distance,
+                              feeds: buildFeeds(for: pair.station))
+            }
+            nearbyStationDepartures = [:]
+            Task { await refreshNearbyDepartures() }
+        } else {
+            // Same stations — just update distances, preserve existing feed UUIDs
+            let feedsByStationId = Dictionary(uniqueKeysWithValues: nearbyStations.map { ($0.station.id, $0.feeds) })
+            nearbyStations = candidates.map { pair in
+                NearbyStation(station: pair.station, distance: pair.distance,
+                              feeds: feedsByStationId[pair.station.id] ?? buildFeeds(for: pair.station))
+            }
         }
     }
 
@@ -159,8 +174,9 @@ class AppStore: ObservableObject {
         return feeds
     }
 
-    private func refreshNearestStationDepartures() async {
-        guard !nearestStationFeeds.isEmpty else { return }
-        nearestStationDepartures = await MTAFeedService.fetchDeparturesForAllFeeds(nearestStationFeeds)
+    private func refreshNearbyDepartures() async {
+        let allFeeds = nearbyStations.flatMap(\.feeds)
+        guard !allFeeds.isEmpty else { return }
+        nearbyStationDepartures = await MTAFeedService.fetchDeparturesForAllFeeds(allFeeds)
     }
 }

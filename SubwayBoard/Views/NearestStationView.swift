@@ -1,6 +1,5 @@
 import SwiftUI
 
-// Groups departures for a single line (both directions) at the nearest station
 private struct NearestLineGroup: Identifiable {
     let line: String
     let uptownDepartures: [Departure]
@@ -8,66 +7,112 @@ private struct NearestLineGroup: Identifiable {
     var id: String { line }
 }
 
-struct NearestStationView: View {
+// One card per station in the nearby list
+struct NearbyStationsView: View {
     @EnvironmentObject var store: AppStore
 
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // Section label
+            HStack(spacing: 5) {
+                Image(systemName: "location.fill")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.teal)
+                Text("NEARBY")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.teal)
+                    .kerning(0.5)
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 12)
+            .padding(.bottom, 6)
+
+            ForEach(store.nearbyStations, id: \.station.id) { nearby in
+                NearbyStationCard(nearby: nearby, departures: store.nearbyStationDepartures)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
+            }
+        }
+    }
+}
+
+private struct NearbyStationCard: View {
+    let nearby: NearbyStation
+    let departures: [UUID: [Departure]]
+
+    private static let lineOrder = ["1","2","3","4","5","6","7","A","C","E","B","D","F","M","G","J","Z","L","N","Q","R","W","S"]
+
     private var lineGroups: [NearestLineGroup] {
-        let lineOrder = ["1","2","3","4","5","6","7","A","C","E","B","D","F","M","G","J","Z","L","N","Q","R","W","S"]
-        let lines = lineOrder.filter { line in
-            store.nearestStationFeeds.contains(where: { $0.line == line })
+        let lines = Self.lineOrder.filter { line in
+            nearby.feeds.contains(where: { $0.line == line })
         }
         return lines.map { line in
-            let uptownFeed = store.nearestStationFeeds.first { $0.line == line && $0.direction == .uptown }
-            let downtownFeed = store.nearestStationFeeds.first { $0.line == line && $0.direction == .downtown }
+            let uptownFeed = nearby.feeds.first { $0.line == line && $0.direction == .uptown }
+            let downtownFeed = nearby.feeds.first { $0.line == line && $0.direction == .downtown }
             return NearestLineGroup(
                 line: line,
-                uptownDepartures: uptownFeed.flatMap { store.nearestStationDepartures[$0.id] } ?? [],
-                downtownDepartures: downtownFeed.flatMap { store.nearestStationDepartures[$0.id] } ?? []
+                uptownDepartures: uptownFeed.flatMap { departures[$0.id] } ?? [],
+                downtownDepartures: downtownFeed.flatMap { departures[$0.id] } ?? []
             )
         }
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            sectionHeader
-            ForEach(lineGroups) { group in
-                NearestLineFeedCard(group: group)
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
+            // Station header
+            HStack(spacing: 6) {
+                Image(systemName: "location.fill")
+                    .font(.caption2)
+                    .foregroundStyle(.teal.opacity(0.7))
+                Text(nearby.station.name)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.white)
+                Spacer()
+                Text(formattedDistance(nearby.distance))
+                    .font(.caption.monospacedDigit())
+                    .foregroundStyle(.teal.opacity(0.85))
             }
-            Spacer(minLength: 4)
-        }
-    }
+            .padding(.horizontal, 12)
+            .padding(.top, 10)
+            .padding(.bottom, 8)
 
-    private var sectionHeader: some View {
-        HStack(spacing: 6) {
-            Image(systemName: "location.fill")
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(.teal)
-            Text("NEAREST")
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(.teal)
-                .kerning(0.5)
-            if let station = store.nearestStation {
-                Text(station.name)
-                    .font(.caption.weight(.medium))
-                    .foregroundStyle(.white.opacity(0.85))
-                    .lineLimit(1)
+            Divider()
+                .background(Color.teal.opacity(0.2))
+                .padding(.horizontal, 12)
+
+            VStack(alignment: .leading, spacing: 0) {
+                ForEach(lineGroups) { group in
+                    LineRow(group: group)
+                    if group.id != lineGroups.last?.id {
+                        Divider()
+                            .background(Color.white.opacity(0.06))
+                            .padding(.horizontal, 4)
+                    }
+                }
+                if lineGroups.isEmpty {
+                    Text("No upcoming trains")
+                        .font(.subheadline)
+                        .foregroundStyle(.gray)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                }
             }
-            Spacer()
-            if let meters = store.nearestStationDistance {
-                Text(formattedDistance(meters))
-                    .font(.caption)
-                    .foregroundStyle(.gray)
-            }
+            .padding(.vertical, 6)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 8)
+        .background(
+            ZStack(alignment: .leading) {
+                Color(red: 0.04, green: 0.11, blue: 0.18)
+                Rectangle()
+                    .fill(Color.teal.opacity(0.55))
+                    .frame(width: 3)
+            }
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
     private func formattedDistance(_ meters: Double) -> String {
         let feet = meters * 3.28084
-        if feet < 528 {  // less than 0.1 mi
+        if feet < 528 {
             return String(format: "%.0f ft", feet)
         } else {
             return String(format: "%.1f mi", meters / 1609.34)
@@ -75,82 +120,62 @@ struct NearestStationView: View {
     }
 }
 
-private struct NearestLineFeedCard: View {
+private struct LineRow: View {
     let group: NearestLineGroup
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 8) {
-                LineBullet(line: group.line)
-                Text(group.line + " train")
-                    .font(.headline)
-                    .foregroundStyle(.white)
-                Spacer()
-                // Subtle auto-indicator
-                Image(systemName: "location.fill")
-                    .font(.caption2)
-                    .foregroundStyle(.teal.opacity(0.6))
-            }
+        HStack(alignment: .center, spacing: 10) {
+            LineBullet(line: group.line, size: 26)
 
-            Divider()
-                .background(Color.teal.opacity(0.25))
-
-            if !group.uptownDepartures.isEmpty {
-                DirectionRow(label: "Uptown", departures: group.uptownDepartures)
-            }
-            if !group.downtownDepartures.isEmpty {
-                DirectionRow(label: "Downtown", departures: group.downtownDepartures)
-            }
-            if group.uptownDepartures.isEmpty && group.downtownDepartures.isEmpty {
-                Text("No upcoming trains")
-                    .font(.subheadline)
-                    .foregroundStyle(.gray)
-                    .padding(.vertical, 2)
-            }
-        }
-        .padding()
-        .background(
-            ZStack(alignment: .leading) {
-                Color(red: 0.04, green: 0.11, blue: 0.18)
-                Rectangle()
-                    .fill(Color.teal.opacity(0.6))
-                    .frame(width: 3)
-            }
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-    }
-}
-
-private struct DirectionRow: View {
-    let label: String
-    let departures: [Departure]
-
-    var body: some View {
-        HStack(alignment: .center, spacing: 6) {
-            Text(label)
-                .font(.caption)
-                .foregroundStyle(.gray)
-                .frame(width: 60, alignment: .leading)
-
-            HStack(spacing: 10) {
-                ForEach(departures.prefix(3)) { dep in
-                    minutesBadge(dep)
+            VStack(alignment: .leading, spacing: 3) {
+                if !group.uptownDepartures.isEmpty {
+                    DirectionDepartures(label: "↑", departures: group.uptownDepartures)
+                }
+                if !group.downtownDepartures.isEmpty {
+                    DirectionDepartures(label: "↓", departures: group.downtownDepartures)
+                }
+                if group.uptownDepartures.isEmpty && group.downtownDepartures.isEmpty {
+                    Text("No trains")
+                        .font(.caption)
+                        .foregroundStyle(.gray)
                 }
             }
 
             Spacer()
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 7)
+    }
+}
+
+private struct DirectionDepartures: View {
+    let label: String
+    let departures: [Departure]
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Text(label)
+                .font(.caption2.weight(.semibold))
+                .foregroundStyle(.gray)
+                .frame(width: 10)
+
+            HStack(spacing: 10) {
+                ForEach(departures.prefix(3)) { dep in
+                    minuteView(dep)
+                }
+            }
 
             if let first = departures.first, !first.destination.isEmpty {
-                Text("→ \(first.destination)")
-                    .font(.caption)
-                    .foregroundStyle(.white.opacity(0.45))
+                Text(first.destination)
+                    .font(.caption2)
+                    .foregroundStyle(.white.opacity(0.35))
                     .lineLimit(1)
             }
         }
     }
 
     @ViewBuilder
-    private func minutesBadge(_ dep: Departure) -> some View {
+    private func minuteView(_ dep: Departure) -> some View {
         if dep.minutes == 0 {
             Text("now")
                 .font(.caption.weight(.bold))
@@ -160,6 +185,7 @@ private struct DirectionRow: View {
                 Text("\(dep.minutes)")
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(dep.minutes <= 2 ? .yellow : .white)
+                    .monospacedDigit()
                 Text("m")
                     .font(.caption2)
                     .foregroundStyle(.gray)
