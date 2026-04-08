@@ -184,7 +184,7 @@ private struct DirectionDepartures: View {
             HStack(alignment: .firstTextBaseline, spacing: 1) {
                 Text("\(dep.minutes)")
                     .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(dep.minutes <= 2 ? .yellow : .white)
+                    .foregroundStyle(.white)
                     .monospacedDigit()
                 Text("m")
                     .font(.caption2)
