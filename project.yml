@@ -30,7 +30,10 @@ targets:
         CURRENT_PROJECT_VERSION: "1"
       configs:
         Release:
-          PROVISIONING_PROFILE: $(SB_APP_PP)
+          CODE_SIGN_STYLE: Manual
+          CODE_SIGN_IDENTITY: Apple Distribution
+          DEVELOPMENT_TEAM: 86GPYNC4TS
+          PROVISIONING_PROFILE_SPECIFIER: match AppStore io.lou.subwayboard
     dependencies:
       - package: SwiftProtobuf
         product: SwiftProtobuf
@@ -55,4 +58,7 @@ targets:
         CURRENT_PROJECT_VERSION: "1"
       configs:
         Release:
-          PROVISIONING_PROFILE: $(SB_WIDGET_PP)
+          CODE_SIGN_STYLE: Manual
+          CODE_SIGN_IDENTITY: Apple Distribution
+          DEVELOPMENT_TEAM: 86GPYNC4TS
+          PROVISIONING_PROFILE_SPECIFIER: match AppStore io.lou.subwayboard.widget

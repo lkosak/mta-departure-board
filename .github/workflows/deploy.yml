@@ -1,4 +1,4 @@
-name: Build & Upload to TestFlight
+name: TestFlight
 
 on:
   push:
@@ -6,14 +6,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: |
-          brew install xcodegen protobuf swift-protobuf
+        run: brew install xcodegen protobuf swift-protobuf
 
       - name: Generate proto files
         run: |
@@ -23,103 +22,20 @@ jobs:
       - name: Generate Xcode project
         run: xcodegen generate
 
-      - name: Install signing certificate
-        env:
-          CERTIFICATE_P12: ${{ secrets.CERTIFICATE_P12 }}
-          CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
-        run: |
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-          CERT_PATH=$RUNNER_TEMP/certificate.p12
-          KEYCHAIN_PASSWORD="actions"
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
 
-          echo -n "$CERTIFICATE_P12" | base64 --decode > $CERT_PATH
+      - run: gem install fastlane -N
 
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.CERTIFICATES_SSH_KEY }}
 
-          security import $CERT_PATH -P "$CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
-
-      - name: Install provisioning profiles
-        env:
-          APP_PROFILE: ${{ secrets.APP_PROVISIONING_PROFILE }}
-          WIDGET_PROFILE: ${{ secrets.WIDGET_PROVISIONING_PROFILE }}
-        run: |
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-
-          echo -n "$APP_PROFILE" | base64 --decode > /tmp/app.mobileprovision
-          APP_UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(security cms -D -i /tmp/app.mobileprovision))
-          cp /tmp/app.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/$APP_UUID.mobileprovision
-          echo "APP_PROFILE_UUID=$APP_UUID" >> $GITHUB_ENV
-
-          echo -n "$WIDGET_PROFILE" | base64 --decode > /tmp/widget.mobileprovision
-          WIDGET_UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(security cms -D -i /tmp/widget.mobileprovision))
-          cp /tmp/widget.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/$WIDGET_UUID.mobileprovision
-          echo "WIDGET_PROFILE_UUID=$WIDGET_UUID" >> $GITHUB_ENV
-
-      - name: Resolve Swift packages
-        run: |
-          xcodebuild -resolvePackageDependencies \
-            -project SubwayBoard.xcodeproj \
-            -scheme SubwayBoard
-
-      - name: Build archive
-        run: |
-          xcodebuild archive \
-            -project SubwayBoard.xcodeproj \
-            -scheme SubwayBoard \
-            -destination 'generic/platform=iOS' \
-            -archivePath $RUNNER_TEMP/SubwayBoard.xcarchive \
-            DEVELOPMENT_TEAM=86GPYNC4TS \
-            CODE_SIGN_STYLE=Manual \
-            CODE_SIGN_IDENTITY="Apple Distribution" \
-            CODE_SIGN_ALLOWED_FOR_APPS_ONLY=YES \
-            SB_APP_PP="$APP_PROFILE_UUID" \
-            SB_WIDGET_PP="$WIDGET_PROFILE_UUID"
-
-      - name: Setup App Store Connect API key
-        env:
-          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-          ASC_API_KEY: ${{ secrets.ASC_API_KEY }}
-        run: |
-          mkdir -p ~/.private_keys
-          echo -n "$ASC_API_KEY" | base64 --decode > ~/.private_keys/AuthKey_${ASC_KEY_ID}.p8
-
-      - name: Export and upload to TestFlight
+      - run: fastlane beta
         env:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
-        run: |
-          cat > $RUNNER_TEMP/ExportOptions.plist << PLIST
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-              <key>method</key>
-              <string>app-store-connect</string>
-              <key>teamID</key>
-              <string>86GPYNC4TS</string>
-              <key>signingStyle</key>
-              <string>manual</string>
-              <key>destination</key>
-              <string>upload</string>
-              <key>provisioningProfiles</key>
-              <dict>
-                  <key>io.lou.subwayboard</key>
-                  <string>${APP_PROFILE_UUID}</string>
-                  <key>io.lou.subwayboard.widget</key>
-                  <string>${WIDGET_PROFILE_UUID}</string>
-              </dict>
-          </dict>
-          </plist>
-          PLIST
-
-          xcodebuild -exportArchive \
-            -archivePath $RUNNER_TEMP/SubwayBoard.xcarchive \
-            -exportPath $RUNNER_TEMP/export \
-            -exportOptionsPlist $RUNNER_TEMP/ExportOptions.plist \
-            -authenticationKeyPath ~/.private_keys/AuthKey_${ASC_KEY_ID}.p8 \
-            -authenticationKeyID "$ASC_KEY_ID" \
-            -authenticationKeyIssuerID "$ASC_ISSUER_ID"
+          ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          BUILD_NUMBER: ${{ github.run_number }}
