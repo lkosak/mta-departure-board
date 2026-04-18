@@ -1,0 +1,626 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0ABFDCE604B8B9B4537D22CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99C6406A3A669A39DC8B83 /* ContentView.swift */; };
+		184462F54E8588B774502D92 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2325B99E48902BCF569E10C3 /* Assets.xcassets */; };
+		25AF93BFF59E06A023162E80 /* SharedDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61995BD758F2EDB0D70CC070 /* SharedDefaults.swift */; };
+		281297700B651E1C38386D91 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1E0B917F59B837D53F6E5D /* Station.swift */; };
+		29D2423E384442AA32F74FE1 /* SubwayDepartureAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8FD415C5C650E8620047A6 /* SubwayDepartureAttributes.swift */; };
+		2F26369B37B56BD237FA03A0 /* gtfs-realtime.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A236F5BC19837A51A27765 /* gtfs-realtime.pb.swift */; };
+		36A47AD210F2C0069DF6DDD3 /* StationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1178530B3D3EEE9D96DC75 /* StationPickerView.swift */; };
+		3A46E856C1233472F8A557D5 /* MTADepartureBoardWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E73C1F768C205341826FF7 /* MTADepartureBoardWidget.swift */; };
+		3F8A61A2425A48C0D28E6C77 /* MTADepartureBoardWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21D68EB7AB23E828491768C /* MTADepartureBoardWidgetBundle.swift */; };
+		414576AF269BBEC9D6AC7F97 /* GTFSStaticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D960B72DC36472D9AE265 /* GTFSStaticService.swift */; };
+		41C3164DD4747D6C55C0F3B8 /* SubwayColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51309E3F4426098EB500906A /* SubwayColors.swift */; };
+		471567009B1D4FC399AC0596 /* SubwayLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7F13A663912BA8BA252354 /* SubwayLiveActivity.swift */; };
+		52B3A03B97FF4CB75A9D2886 /* MTADepartureBoardWidgetExtension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 63714D41F9B9E2A54255CAF8 /* MTADepartureBoardWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		53560DD92FCDCDF8920E84DB /* MTAFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B76582C6637DBDE08A2DDCA /* MTAFeedService.swift */; };
+		60791A5092848CAD32A7678C /* MTADepartureBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45239161E1517C5C0C80B4A9 /* MTADepartureBoardApp.swift */; };
+		6AAC9E709A61765540338481 /* MTADepartureBoardWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD79C5643F640EC4477E01 /* MTADepartureBoardWidgetView.swift */; };
+		713164A003277E866D4002F6 /* LinePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2A35529238DAF06F21A06 /* LinePickerView.swift */; };
+		71CC3ED91668DE991F94F382 /* SharedDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61995BD758F2EDB0D70CC070 /* SharedDefaults.swift */; };
+		8629D9DEE5BF319616F60740 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55F363852C66F3C648B12CE /* LocationService.swift */; };
+		9287C7D8F499C659C969F8D6 /* NearestStationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF05776903E21D918E94270 /* NearestStationView.swift */; };
+		96FD36C2CE7E116A39EB09F1 /* FeedCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFCAFA55EDA5E42F17950B7 /* FeedCardView.swift */; };
+		9941CBF7FED480EBCC319793 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6765287F612E4CFA4095051 /* AppStore.swift */; };
+		A0FCECE82A7B51406003CFCE /* DepartureBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430B7D0029605430F902210 /* DepartureBoardView.swift */; };
+		A54FF7B9AED91F863722A56C /* WatchedFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73771ED01CFA9199F3F50BE0 /* WatchedFeed.swift */; };
+		A5CD1D5C224008F1397077C6 /* SubwayColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51309E3F4426098EB500906A /* SubwayColors.swift */; };
+		AC49FD0CB692C0B4CFFDB940 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79CEFA3EBD2B5D13715BB24 /* LiveActivityManager.swift */; };
+		B7E2F05F2AE3931A3C0F1FE7 /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3866695E601020401764CA8C /* Departure.swift */; };
+		D79990AEC82F6BCFC307950C /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3866695E601020401764CA8C /* Departure.swift */; };
+		E0B1F41A9945D73712942C13 /* WatchedFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73771ED01CFA9199F3F50BE0 /* WatchedFeed.swift */; };
+		E38670467E0A88402911A83F /* SubwayDepartureAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8FD415C5C650E8620047A6 /* SubwayDepartureAttributes.swift */; };
+		EE914049E8BFFC6E1CD315F5 /* nyct-subway.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA25546AB23A2AB3E1470FC5 /* nyct-subway.pb.swift */; };
+		EF37BA5437EAA1C18E11665E /* SelectLineIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211AF45811C5F4B7F27DA22A /* SelectLineIntent.swift */; };
+		F45587AD76BF3368C9D21A57 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1E0B917F59B837D53F6E5D /* Station.swift */; };
+		FBB6F3E7EEFF5546456422CF /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 3B3F8DE59EB66F4044BFB105 /* SwiftProtobuf */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A767DE76E7238D135522AE56 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DA2D545C56B0519F5B1ACB2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9EA7987BC5C37D2FA42FF22D;
+			remoteInfo = MTADepartureBoardWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		26039337E36D0E9E8DB13FC6 /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				52B3A03B97FF4CB75A9D2886 /* MTADepartureBoardWidgetExtension.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		06E71404C9A28990FBDAB95E /* MTADepartureBoardWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MTADepartureBoardWidget.entitlements; sourceTree = "<group>"; };
+		0FC95A43DD7B6BD135A93718 /* MTADepartureBoard.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MTADepartureBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		211AF45811C5F4B7F27DA22A /* SelectLineIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLineIntent.swift; sourceTree = "<group>"; };
+		2325B99E48902BCF569E10C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		34BEAE30CBD04F61E6BC7978 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3866695E601020401764CA8C /* Departure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Departure.swift; sourceTree = "<group>"; };
+		3EF05776903E21D918E94270 /* NearestStationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearestStationView.swift; sourceTree = "<group>"; };
+		45239161E1517C5C0C80B4A9 /* MTADepartureBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTADepartureBoardApp.swift; sourceTree = "<group>"; };
+		51309E3F4426098EB500906A /* SubwayColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayColors.swift; sourceTree = "<group>"; };
+		5C99C6406A3A669A39DC8B83 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		61995BD758F2EDB0D70CC070 /* SharedDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDefaults.swift; sourceTree = "<group>"; };
+		63714D41F9B9E2A54255CAF8 /* MTADepartureBoardWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = MTADepartureBoardWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		65F2A35529238DAF06F21A06 /* LinePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinePickerView.swift; sourceTree = "<group>"; };
+		6B8FD415C5C650E8620047A6 /* SubwayDepartureAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayDepartureAttributes.swift; sourceTree = "<group>"; };
+		73771ED01CFA9199F3F50BE0 /* WatchedFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedFeed.swift; sourceTree = "<group>"; };
+		7B7F13A663912BA8BA252354 /* SubwayLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayLiveActivity.swift; sourceTree = "<group>"; };
+		85DD79C5643F640EC4477E01 /* MTADepartureBoardWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTADepartureBoardWidgetView.swift; sourceTree = "<group>"; };
+		89A236F5BC19837A51A27765 /* gtfs-realtime.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "gtfs-realtime.pb.swift"; sourceTree = "<group>"; };
+		8B76582C6637DBDE08A2DDCA /* MTAFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTAFeedService.swift; sourceTree = "<group>"; };
+		9C1E0B917F59B837D53F6E5D /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
+		9E7D960B72DC36472D9AE265 /* GTFSStaticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTFSStaticService.swift; sourceTree = "<group>"; };
+		A55F363852C66F3C648B12CE /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		AA25546AB23A2AB3E1470FC5 /* nyct-subway.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "nyct-subway.pb.swift"; sourceTree = "<group>"; };
+		B6765287F612E4CFA4095051 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		C7B5E36D85F25CDED26D3DA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C9E73C1F768C205341826FF7 /* MTADepartureBoardWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTADepartureBoardWidget.swift; sourceTree = "<group>"; };
+		D79CEFA3EBD2B5D13715BB24 /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
+		DF1178530B3D3EEE9D96DC75 /* StationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationPickerView.swift; sourceTree = "<group>"; };
+		F21D68EB7AB23E828491768C /* MTADepartureBoardWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTADepartureBoardWidgetBundle.swift; sourceTree = "<group>"; };
+		F430B7D0029605430F902210 /* DepartureBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureBoardView.swift; sourceTree = "<group>"; };
+		F51401A1D28F974115E88797 /* MTADepartureBoard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MTADepartureBoard.entitlements; sourceTree = "<group>"; };
+		FAFCAFA55EDA5E42F17950B7 /* FeedCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCardView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4E19D8069FEBF233104A8BC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBB6F3E7EEFF5546456422CF /* SwiftProtobuf in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3F294A59FA73645B1CF0958F /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				89A236F5BC19837A51A27765 /* gtfs-realtime.pb.swift */,
+				AA25546AB23A2AB3E1470FC5 /* nyct-subway.pb.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
+		42B10067C7A44E6D129D39DB /* SharedModels */ = {
+			isa = PBXGroup;
+			children = (
+				3866695E601020401764CA8C /* Departure.swift */,
+				9C1E0B917F59B837D53F6E5D /* Station.swift */,
+				51309E3F4426098EB500906A /* SubwayColors.swift */,
+				6B8FD415C5C650E8620047A6 /* SubwayDepartureAttributes.swift */,
+				73771ED01CFA9199F3F50BE0 /* WatchedFeed.swift */,
+			);
+			name = SharedModels;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		53E02DC14A5787DEA14ED7B5 /* MTADepartureBoard */ = {
+			isa = PBXGroup;
+			children = (
+				2325B99E48902BCF569E10C3 /* Assets.xcassets */,
+				C7B5E36D85F25CDED26D3DA2 /* Info.plist */,
+				F51401A1D28F974115E88797 /* MTADepartureBoard.entitlements */,
+				45239161E1517C5C0C80B4A9 /* MTADepartureBoardApp.swift */,
+				3F294A59FA73645B1CF0958F /* Generated */,
+				85E83693E22E3AD967A31186 /* Services */,
+				42B10067C7A44E6D129D39DB /* SharedModels */,
+				DD688F95A934383D7C8781EE /* Views */,
+			);
+			path = MTADepartureBoard;
+			sourceTree = "<group>";
+		};
+		85E83693E22E3AD967A31186 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B6765287F612E4CFA4095051 /* AppStore.swift */,
+				9E7D960B72DC36472D9AE265 /* GTFSStaticService.swift */,
+				D79CEFA3EBD2B5D13715BB24 /* LiveActivityManager.swift */,
+				A55F363852C66F3C648B12CE /* LocationService.swift */,
+				8B76582C6637DBDE08A2DDCA /* MTAFeedService.swift */,
+				61995BD758F2EDB0D70CC070 /* SharedDefaults.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		86F197A663E58994FD469877 = {
+			isa = PBXGroup;
+			children = (
+				53E02DC14A5787DEA14ED7B5 /* MTADepartureBoard */,
+				DC20A0E29D8D007FD65DF208 /* MTADepartureBoardWidget */,
+				96B0D4C955749C27995B9696 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		96B0D4C955749C27995B9696 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0FC95A43DD7B6BD135A93718 /* MTADepartureBoard.app */,
+				63714D41F9B9E2A54255CAF8 /* MTADepartureBoardWidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DC20A0E29D8D007FD65DF208 /* MTADepartureBoardWidget */ = {
+			isa = PBXGroup;
+			children = (
+				34BEAE30CBD04F61E6BC7978 /* Info.plist */,
+				06E71404C9A28990FBDAB95E /* MTADepartureBoardWidget.entitlements */,
+				C9E73C1F768C205341826FF7 /* MTADepartureBoardWidget.swift */,
+				F21D68EB7AB23E828491768C /* MTADepartureBoardWidgetBundle.swift */,
+				85DD79C5643F640EC4477E01 /* MTADepartureBoardWidgetView.swift */,
+				211AF45811C5F4B7F27DA22A /* SelectLineIntent.swift */,
+				7B7F13A663912BA8BA252354 /* SubwayLiveActivity.swift */,
+			);
+			path = MTADepartureBoardWidget;
+			sourceTree = "<group>";
+		};
+		DD688F95A934383D7C8781EE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5C99C6406A3A669A39DC8B83 /* ContentView.swift */,
+				F430B7D0029605430F902210 /* DepartureBoardView.swift */,
+				FAFCAFA55EDA5E42F17950B7 /* FeedCardView.swift */,
+				65F2A35529238DAF06F21A06 /* LinePickerView.swift */,
+				3EF05776903E21D918E94270 /* NearestStationView.swift */,
+				DF1178530B3D3EEE9D96DC75 /* StationPickerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1B376CD7F6B903D7C3FD7962 /* MTADepartureBoard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4BE6C7FDA9614DFBD4DE4DC2 /* Build configuration list for PBXNativeTarget "MTADepartureBoard" */;
+			buildPhases = (
+				E0E968D67F3DA5E725BB821B /* Sources */,
+				F69C38872C5B77F18765D3C2 /* Resources */,
+				4E19D8069FEBF233104A8BC6 /* Frameworks */,
+				26039337E36D0E9E8DB13FC6 /* Embed ExtensionKit Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				36BEA91CA6162596166B45B5 /* PBXTargetDependency */,
+			);
+			name = MTADepartureBoard;
+			packageProductDependencies = (
+				3B3F8DE59EB66F4044BFB105 /* SwiftProtobuf */,
+			);
+			productName = MTADepartureBoard;
+			productReference = 0FC95A43DD7B6BD135A93718 /* MTADepartureBoard.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9EA7987BC5C37D2FA42FF22D /* MTADepartureBoardWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5509F53E8519025EF8925A9F /* Build configuration list for PBXNativeTarget "MTADepartureBoardWidgetExtension" */;
+			buildPhases = (
+				B0E93B4A4DE1D66409747CDE /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MTADepartureBoardWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = MTADepartureBoardWidgetExtension;
+			productReference = 63714D41F9B9E2A54255CAF8 /* MTADepartureBoardWidgetExtension.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4DA2D545C56B0519F5B1ACB2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = DE80689825018429FA88E080 /* Build configuration list for PBXProject "MTADepartureBoard" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 86F197A663E58994FD469877;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				53153D3BBEE3F3818C8E44BC /* XCRemoteSwiftPackageReference "swift-protobuf" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 96B0D4C955749C27995B9696 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1B376CD7F6B903D7C3FD7962 /* MTADepartureBoard */,
+				9EA7987BC5C37D2FA42FF22D /* MTADepartureBoardWidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F69C38872C5B77F18765D3C2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				184462F54E8588B774502D92 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B0E93B4A4DE1D66409747CDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D79990AEC82F6BCFC307950C /* Departure.swift in Sources */,
+				3A46E856C1233472F8A557D5 /* MTADepartureBoardWidget.swift in Sources */,
+				3F8A61A2425A48C0D28E6C77 /* MTADepartureBoardWidgetBundle.swift in Sources */,
+				6AAC9E709A61765540338481 /* MTADepartureBoardWidgetView.swift in Sources */,
+				EF37BA5437EAA1C18E11665E /* SelectLineIntent.swift in Sources */,
+				71CC3ED91668DE991F94F382 /* SharedDefaults.swift in Sources */,
+				281297700B651E1C38386D91 /* Station.swift in Sources */,
+				A5CD1D5C224008F1397077C6 /* SubwayColors.swift in Sources */,
+				29D2423E384442AA32F74FE1 /* SubwayDepartureAttributes.swift in Sources */,
+				471567009B1D4FC399AC0596 /* SubwayLiveActivity.swift in Sources */,
+				E0B1F41A9945D73712942C13 /* WatchedFeed.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0E968D67F3DA5E725BB821B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9941CBF7FED480EBCC319793 /* AppStore.swift in Sources */,
+				0ABFDCE604B8B9B4537D22CD /* ContentView.swift in Sources */,
+				B7E2F05F2AE3931A3C0F1FE7 /* Departure.swift in Sources */,
+				A0FCECE82A7B51406003CFCE /* DepartureBoardView.swift in Sources */,
+				96FD36C2CE7E116A39EB09F1 /* FeedCardView.swift in Sources */,
+				414576AF269BBEC9D6AC7F97 /* GTFSStaticService.swift in Sources */,
+				713164A003277E866D4002F6 /* LinePickerView.swift in Sources */,
+				AC49FD0CB692C0B4CFFDB940 /* LiveActivityManager.swift in Sources */,
+				8629D9DEE5BF319616F60740 /* LocationService.swift in Sources */,
+				60791A5092848CAD32A7678C /* MTADepartureBoardApp.swift in Sources */,
+				53560DD92FCDCDF8920E84DB /* MTAFeedService.swift in Sources */,
+				9287C7D8F499C659C969F8D6 /* NearestStationView.swift in Sources */,
+				25AF93BFF59E06A023162E80 /* SharedDefaults.swift in Sources */,
+				F45587AD76BF3368C9D21A57 /* Station.swift in Sources */,
+				36A47AD210F2C0069DF6DDD3 /* StationPickerView.swift in Sources */,
+				41C3164DD4747D6C55C0F3B8 /* SubwayColors.swift in Sources */,
+				E38670467E0A88402911A83F /* SubwayDepartureAttributes.swift in Sources */,
+				A54FF7B9AED91F863722A56C /* WatchedFeed.swift in Sources */,
+				2F26369B37B56BD237FA03A0 /* gtfs-realtime.pb.swift in Sources */,
+				EE914049E8BFFC6E1CD315F5 /* nyct-subway.pb.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		36BEA91CA6162596166B45B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9EA7987BC5C37D2FA42FF22D /* MTADepartureBoardWidgetExtension */;
+			targetProxy = A767DE76E7238D135522AE56 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		096FF26FA1B791F4CEFF5349 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MTADepartureBoard/MTADepartureBoard.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 86GPYNC4TS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MTADepartureBoard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "MTA Departure Board";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard;
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.lou.subwayboard";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1D34723ACFD8CD2D60FEA87E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MTADepartureBoardWidget/MTADepartureBoardWidget.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MTADepartureBoardWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "MTA Departure Board Widget";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard.widget;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		41527437F20B8AB2E9BC1484 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		74B7C0E580FFD129E1B3DDC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MTADepartureBoard/MTADepartureBoard.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MTADepartureBoard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "MTA Departure Board";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B375AFB3DBBB561ED486EB09 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MTADepartureBoardWidget/MTADepartureBoardWidget.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 86GPYNC4TS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MTADepartureBoardWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "MTA Departure Board Widget";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard.widget;
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.lou.subwayboard.widget";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E90AE876D218F30E1C416C1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4BE6C7FDA9614DFBD4DE4DC2 /* Build configuration list for PBXNativeTarget "MTADepartureBoard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74B7C0E580FFD129E1B3DDC6 /* Debug */,
+				096FF26FA1B791F4CEFF5349 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5509F53E8519025EF8925A9F /* Build configuration list for PBXNativeTarget "MTADepartureBoardWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D34723ACFD8CD2D60FEA87E /* Debug */,
+				B375AFB3DBBB561ED486EB09 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DE80689825018429FA88E080 /* Build configuration list for PBXProject "MTADepartureBoard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				41527437F20B8AB2E9BC1484 /* Debug */,
+				E90AE876D218F30E1C416C1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		53153D3BBEE3F3818C8E44BC /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.28.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3B3F8DE59EB66F4044BFB105 /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53153D3BBEE3F3818C8E44BC /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 4DA2D545C56B0519F5B1ACB2 /* Project object */;
+}

@@ -2,9 +2,9 @@ import SwiftUI
 import WidgetKit
 
 @main
-struct SubwayBoardWidgetBundle: WidgetBundle {
+struct MTADepartureBoardWidgetBundle: WidgetBundle {
     var body: some Widget {
-        SubwayBoardWidget()
+        MTADepartureBoardWidget()
         SubwayLiveActivity()
     }
 }

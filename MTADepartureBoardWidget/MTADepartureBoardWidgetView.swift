@@ -1,7 +1,7 @@
 import SwiftUI
 import WidgetKit
 
-struct SubwayBoardWidgetView: View {
+struct MTADepartureBoardWidgetView: View {
     let entry: DepartureEntry
 
     @Environment(\.widgetFamily) var family

@@ -8,7 +8,7 @@ struct DepartureEntry: TimelineEntry {
     let departures: [CachedDeparture]
 }
 
-struct SubwayBoardProvider: AppIntentTimelineProvider {
+struct MTADepartureBoardProvider: AppIntentTimelineProvider {
     typealias Intent = SelectLineIntent
 
     func placeholder(in context: Context) -> DepartureEntry {
@@ -46,12 +46,12 @@ struct SubwayBoardProvider: AppIntentTimelineProvider {
     }
 }
 
-struct SubwayBoardWidget: Widget {
-    let kind = "SubwayBoardWidget"
+struct MTADepartureBoardWidget: Widget {
+    let kind = "MTADepartureBoardWidget"
 
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: SelectLineIntent.self, provider: SubwayBoardProvider()) { entry in
-            SubwayBoardWidgetView(entry: entry)
+        AppIntentConfiguration(kind: kind, intent: SelectLineIntent.self, provider: MTADepartureBoardProvider()) { entry in
+            MTADepartureBoardWidgetView(entry: entry)
                 .containerBackground(.black, for: .widget)
         }
         .configurationDisplayName("Subway Departures")

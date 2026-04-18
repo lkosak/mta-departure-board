@@ -1,4 +1,4 @@
-name: SubwayBoard
+name: MTADepartureBoard
 options:
   bundleIdPrefix: io.lou
   deploymentTarget:
@@ -9,15 +9,16 @@ packages:
     url: https://github.com/apple/swift-protobuf.git
     from: "1.28.0"
 targets:
-  SubwayBoard:
+  MTADepartureBoard:
     type: application
     platform: iOS
     sources:
-      - SubwayBoard
+      - MTADepartureBoard
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_FILE: SubwayBoard/Info.plist
+        INFOPLIST_FILE: MTADepartureBoard/Info.plist
+        INFOPLIST_KEY_CFBundleDisplayName: MTA Departure Board
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
@@ -25,7 +26,7 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
         SWIFT_EMIT_LOC_STRINGS: YES
         PRODUCT_BUNDLE_IDENTIFIER: io.lou.subwayboard
-        CODE_SIGN_ENTITLEMENTS: SubwayBoard/SubwayBoard.entitlements
+        CODE_SIGN_ENTITLEMENTS: MTADepartureBoard/MTADepartureBoard.entitlements
         MARKETING_VERSION: "1.0"
         CURRENT_PROJECT_VERSION: "1"
       configs:
@@ -37,23 +38,23 @@ targets:
     dependencies:
       - package: SwiftProtobuf
         product: SwiftProtobuf
-      - target: SubwayBoardWidgetExtension
-  SubwayBoardWidgetExtension:
+      - target: MTADepartureBoardWidgetExtension
+  MTADepartureBoardWidgetExtension:
     type: extensionkit-extension
     platform: iOS
     sources:
-      - SubwayBoardWidget
-      - path: SubwayBoard/Models
+      - MTADepartureBoardWidget
+      - path: MTADepartureBoard/Models
         name: SharedModels
-      - path: SubwayBoard/Services/SharedDefaults.swift
+      - path: MTADepartureBoard/Services/SharedDefaults.swift
         name: SharedDefaults
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_FILE: SubwayBoardWidget/Info.plist
+        INFOPLIST_FILE: MTADepartureBoardWidget/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: io.lou.subwayboard.widget
-        CODE_SIGN_ENTITLEMENTS: SubwayBoardWidget/SubwayBoardWidget.entitlements
-        INFOPLIST_KEY_CFBundleDisplayName: SubwayBoard Widget
+        CODE_SIGN_ENTITLEMENTS: MTADepartureBoardWidget/MTADepartureBoardWidget.entitlements
+        INFOPLIST_KEY_CFBundleDisplayName: MTA Departure Board Widget
         MARKETING_VERSION: "1.0"
         CURRENT_PROJECT_VERSION: "1"
       configs:

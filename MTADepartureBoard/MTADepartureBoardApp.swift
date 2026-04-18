@@ -5,7 +5,7 @@ import WidgetKit
 private let refreshTaskIdentifier = "io.lou.subwayboard.refresh"
 
 @main
-struct SubwayBoardApp: App {
+struct MTADepartureBoardApp: App {
     @StateObject private var store = AppStore()
     @StateObject private var liveActivityManager = LiveActivityManager.shared
     @Environment(\.scenePhase) private var scenePhase
