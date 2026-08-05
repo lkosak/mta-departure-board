@@ -19,7 +19,6 @@
 		414576AF269BBEC9D6AC7F97 /* GTFSStaticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D960B72DC36472D9AE265 /* GTFSStaticService.swift */; };
 		41C3164DD4747D6C55C0F3B8 /* SubwayColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51309E3F4426098EB500906A /* SubwayColors.swift */; };
 		471567009B1D4FC399AC0596 /* SubwayLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7F13A663912BA8BA252354 /* SubwayLiveActivity.swift */; };
-		52B3A03B97FF4CB75A9D2886 /* MTADepartureBoardWidgetExtension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 63714D41F9B9E2A54255CAF8 /* MTADepartureBoardWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		53560DD92FCDCDF8920E84DB /* MTAFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B76582C6637DBDE08A2DDCA /* MTAFeedService.swift */; };
 		60791A5092848CAD32A7678C /* MTADepartureBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45239161E1517C5C0C80B4A9 /* MTADepartureBoardApp.swift */; };
 		6AAC9E709A61765540338481 /* MTADepartureBoardWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD79C5643F640EC4477E01 /* MTADepartureBoardWidgetView.swift */; };
@@ -33,6 +32,7 @@
 		A54FF7B9AED91F863722A56C /* WatchedFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73771ED01CFA9199F3F50BE0 /* WatchedFeed.swift */; };
 		A5CD1D5C224008F1397077C6 /* SubwayColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51309E3F4426098EB500906A /* SubwayColors.swift */; };
 		AC49FD0CB692C0B4CFFDB940 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79CEFA3EBD2B5D13715BB24 /* LiveActivityManager.swift */; };
+		B1BB93BB97D06EDEE04B8C08 /* MTADepartureBoardWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 63714D41F9B9E2A54255CAF8 /* MTADepartureBoardWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B7E2F05F2AE3931A3C0F1FE7 /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3866695E601020401764CA8C /* Departure.swift */; };
 		D79990AEC82F6BCFC307950C /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3866695E601020401764CA8C /* Departure.swift */; };
 		E0B1F41A9945D73712942C13 /* WatchedFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73771ED01CFA9199F3F50BE0 /* WatchedFeed.swift */; };
@@ -54,15 +54,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		26039337E36D0E9E8DB13FC6 /* Embed ExtensionKit Extensions */ = {
+		BB8BF71B45F84B2B319A915C /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
-			dstSubfolderSpec = 16;
+			dstPath = "";
+			dstSubfolderSpec = 13;
 			files = (
-				52B3A03B97FF4CB75A9D2886 /* MTADepartureBoardWidgetExtension.appex in Embed ExtensionKit Extensions */,
+				B1BB93BB97D06EDEE04B8C08 /* MTADepartureBoardWidgetExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed ExtensionKit Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -79,7 +79,7 @@
 		51309E3F4426098EB500906A /* SubwayColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayColors.swift; sourceTree = "<group>"; };
 		5C99C6406A3A669A39DC8B83 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		61995BD758F2EDB0D70CC070 /* SharedDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDefaults.swift; sourceTree = "<group>"; };
-		63714D41F9B9E2A54255CAF8 /* MTADepartureBoardWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = MTADepartureBoardWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		63714D41F9B9E2A54255CAF8 /* MTADepartureBoardWidgetExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = MTADepartureBoardWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F2A35529238DAF06F21A06 /* LinePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinePickerView.swift; sourceTree = "<group>"; };
 		6B8FD415C5C650E8620047A6 /* SubwayDepartureAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayDepartureAttributes.swift; sourceTree = "<group>"; };
 		73771ED01CFA9199F3F50BE0 /* WatchedFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedFeed.swift; sourceTree = "<group>"; };
@@ -219,7 +219,7 @@
 				E0E968D67F3DA5E725BB821B /* Sources */,
 				F69C38872C5B77F18765D3C2 /* Resources */,
 				4E19D8069FEBF233104A8BC6 /* Frameworks */,
-				26039337E36D0E9E8DB13FC6 /* Embed ExtensionKit Extensions */,
+				BB8BF71B45F84B2B319A915C /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -249,7 +249,7 @@
 			);
 			productName = MTADepartureBoardWidgetExtension;
 			productReference = 63714D41F9B9E2A54255CAF8 /* MTADepartureBoardWidgetExtension.appex */;
-			productType = "com.apple.product-type.extensionkit-extension";
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -394,6 +394,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard.widget;
@@ -506,6 +507,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.lou.subwayboard.widget;

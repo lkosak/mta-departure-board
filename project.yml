@@ -40,7 +40,7 @@ targets:
         product: SwiftProtobuf
       - target: MTADepartureBoardWidgetExtension
   MTADepartureBoardWidgetExtension:
-    type: extensionkit-extension
+    type: app-extension
     platform: iOS
     sources:
       - MTADepartureBoardWidget
