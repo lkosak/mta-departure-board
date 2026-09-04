@@ -99,17 +99,39 @@ private struct AlertCard: View {
     /// Only shown when the alert applies to some, but not all, of the directions on screen.
     let directions: [WatchedFeed.Direction]
 
+    /// Planned work is muted; anything happening now gets the warning color.
+    private var accent: Color {
+        alert.isPlanned ? .cyan : .yellow
+    }
+
+    /// "DELAYS", or "DELAYS · DOWNTOWN" when the alert hits only one of the
+    /// directions on screen. Falls back to the directions alone if the feed
+    /// omits a type.
+    private var headingText: String? {
+        let directionText = directions.map { $0.label.uppercased() }
+        let parts = [alert.typeHeading].compactMap { $0 } + directionText
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
+    }
+
+    /// Time alone for today's alerts, date and time for older ones.
+    private static func postedFormat(_ date: Date) -> String {
+        if Calendar.current.isDateInToday(date) {
+            return date.formatted(date: .omitted, time: .shortened)
+        }
+        return date.formatted(date: .abbreviated, time: .shortened)
+    }
+
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 8) {
-            Image(systemName: "exclamationmark.triangle.fill")
+            Image(systemName: alert.isPlanned ? "calendar" : "exclamationmark.triangle.fill")
                 .font(.caption)
-                .foregroundStyle(.yellow)
+                .foregroundStyle(accent)
 
             VStack(alignment: .leading, spacing: 6) {
-                if !directions.isEmpty {
-                    Text(directions.map(\.label).joined(separator: " · ").uppercased())
-                        .font(.caption2.weight(.semibold))
-                        .foregroundStyle(.yellow.opacity(0.7))
+                if let heading = headingText {
+                    Text(heading)
+                        .font(.caption2.weight(.bold))
+                        .foregroundStyle(accent)
                         .kerning(0.5)
                 }
 
@@ -122,12 +144,18 @@ private struct AlertCard: View {
                         .foregroundStyle(.white.opacity(0.55))
                         .fixedSize(horizontal: false, vertical: true)
                 }
+
+                if let postedAt = alert.postedAt {
+                    Text("Posted \(Self.postedFormat(postedAt))")
+                        .font(.caption2)
+                        .foregroundStyle(.white.opacity(0.4))
+                }
             }
 
             Spacer(minLength: 0)
         }
         .padding(12)
-        .background(Color.yellow.opacity(0.1))
+        .background(accent.opacity(0.1))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }

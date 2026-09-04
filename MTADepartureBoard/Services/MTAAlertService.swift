@@ -20,6 +20,8 @@ actor MTAAlertService {
         let id: String
         let header: String
         let details: String?
+        let postedAt: Date?
+        let alertType: String?
         let selectors: [Selector]
         let activePeriods: [(start: Date?, end: Date?)]
 
@@ -50,7 +52,8 @@ actor MTAAlertService {
             let feedAlerts = active.filter { self.matches($0, feed: feed) }
             guard !feedAlerts.isEmpty else { continue }
             result[feed.id] = feedAlerts.map {
-                ServiceAlert(id: $0.id, header: $0.header, details: $0.details)
+                ServiceAlert(id: $0.id, header: $0.header, details: $0.details, postedAt: $0.postedAt,
+                             alertType: $0.alertType)
             }
         }
         return result
@@ -79,6 +82,8 @@ actor MTAAlertService {
         guard let header = englishText(alert.hasHeaderText ? alert.headerText : nil),
               !header.isEmpty else { return nil }
 
+        let mercury = varintScan(alert.unknownFields.data, forField: Self.mercuryAlertField)?.bytes
+
         let selectors: [Selector] = alert.informedEntity.compactMap { selector in
             guard selector.hasRouteID, !selector.routeID.isEmpty else { return nil }
             return Selector(
@@ -98,9 +103,63 @@ actor MTAAlertService {
             id: entity.id,
             header: header,
             details: englishText(alert.hasDescriptionText ? alert.descriptionText : nil),
+            postedAt: mercury.flatMap { varintScan($0, forField: 1)?.varint }
+                .map { Date(timeIntervalSince1970: Double($0)) },
+            alertType: mercury.flatMap { varintScan($0, forField: 3)?.bytes }
+                .flatMap { String(data: $0, encoding: .utf8) },
             selectors: selectors,
             activePeriods: periods
         )
+    }
+
+    /// The MTA's Mercury extension carries what the standard GTFS-realtime Alert message
+    /// lacks: subfield 1 is created_at, subfield 3 the alert type ("Delays"). MTA leaves
+    /// the standard effect/cause fields unset, so this is the only source for the type.
+    /// Read from unknown fields rather than pulling in the camsys proto for two values.
+    private nonisolated static let mercuryAlertField = 1001
+
+    /// Minimal protobuf wire-format scan for a single top-level field.
+    private nonisolated static func varintScan(_ data: Data, forField field: Int) -> (varint: UInt64, bytes: Data)? {
+        var index = data.startIndex
+
+        func readVarint() -> UInt64? {
+            var result: UInt64 = 0
+            var shift: UInt64 = 0
+            while index < data.endIndex {
+                let byte = data[index]
+                index = data.index(after: index)
+                result |= UInt64(byte & 0x7F) << shift
+                if byte & 0x80 == 0 { return result }
+                shift += 7
+                if shift > 63 { return nil }
+            }
+            return nil
+        }
+
+        while index < data.endIndex {
+            guard let key = readVarint() else { return nil }
+            let fieldNumber = Int(key >> 3)
+            let wireType = key & 0x7
+
+            switch wireType {
+            case 0:
+                guard let value = readVarint() else { return nil }
+                if fieldNumber == field { return (value, Data()) }
+            case 1, 5:
+                let width = wireType == 1 ? 8 : 4
+                guard data.distance(from: index, to: data.endIndex) >= width else { return nil }
+                index = data.index(index, offsetBy: width)
+            case 2:
+                guard let length = readVarint(),
+                      data.distance(from: index, to: data.endIndex) >= Int(length) else { return nil }
+                let end = data.index(index, offsetBy: Int(length))
+                if fieldNumber == field { return (0, Data(data[index..<end])) }
+                index = end
+            default:
+                return nil  // Groups — not used by this feed.
+            }
+        }
+        return nil
     }
 
     /// Picks the plain-text English translation, ignoring the "en-html" variant.
