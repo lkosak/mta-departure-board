@@ -165,34 +165,27 @@ private struct DirectionSection: View {
     let departures: [Departure]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 8) {
             Text(feed.direction.label.uppercased())
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.gray)
                 .kerning(0.5)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 10)
 
             Divider()
-                .background(Color.gray.opacity(0.4))
-                .padding(.horizontal, 12)
+                .background(Color.gray.opacity(0.5))
 
             if departures.isEmpty {
                 Text("No upcoming trains")
                     .font(.subheadline)
                     .foregroundStyle(.gray)
-                    .padding(12)
+                    .padding(.vertical, 4)
             } else {
                 ForEach(departures) { departure in
                     DetailDepartureRow(departure: departure)
-                    if departure.id != departures.last?.id {
-                        Divider()
-                            .background(Color.white.opacity(0.06))
-                            .padding(.horizontal, 12)
-                    }
                 }
             }
         }
+        .padding()
         .background(Color(white: 0.1))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
@@ -217,8 +210,7 @@ private struct DetailDepartureRow: View {
             countdown
                 .frame(minWidth: 60, alignment: .trailing)
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 10)
+        .padding(.vertical, 2)
     }
 
     @ViewBuilder
