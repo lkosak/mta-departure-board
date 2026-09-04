@@ -2,6 +2,8 @@ import SwiftUI
 
 private struct NearestLineGroup: Identifiable {
     let line: String
+    let feeds: [WatchedFeed]
+    let hasAlert: Bool
     let uptownDepartures: [Departure]
     let downtownDepartures: [Departure]
     var id: String { line }
@@ -10,6 +12,8 @@ private struct NearestLineGroup: Identifiable {
 // One card per station in the nearby list
 struct NearbyStationsView: View {
     @EnvironmentObject var store: AppStore
+
+    var onSelectLine: (LineDetailTarget) -> Void = { _ in }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -28,7 +32,10 @@ struct NearbyStationsView: View {
             .padding(.bottom, 6)
 
             ForEach(store.nearbyStations, id: \.station.id) { nearby in
-                NearbyStationCard(nearby: nearby, departures: store.nearbyStationDepartures)
+                NearbyStationCard(nearby: nearby,
+                                  departures: store.nearbyStationDepartures,
+                                  alerts: store.alerts,
+                                  onSelectLine: onSelectLine)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 8)
             }
@@ -39,6 +46,8 @@ struct NearbyStationsView: View {
 private struct NearbyStationCard: View {
     let nearby: NearbyStation
     let departures: [UUID: [Departure]]
+    let alerts: [UUID: [ServiceAlert]]
+    let onSelectLine: (LineDetailTarget) -> Void
 
     private static let lineOrder = ["1","2","3","4","5","6","7","A","C","E","B","D","F","M","G","J","Z","L","N","Q","R","W","S"]
 
@@ -49,8 +58,11 @@ private struct NearbyStationCard: View {
         return lines.map { line in
             let uptownFeed = nearby.feeds.first { $0.line == line && $0.direction == .uptown }
             let downtownFeed = nearby.feeds.first { $0.line == line && $0.direction == .downtown }
+            let feeds = [uptownFeed, downtownFeed].compactMap { $0 }
             return NearestLineGroup(
                 line: line,
+                feeds: feeds,
+                hasAlert: feeds.contains { !(alerts[$0.id] ?? []).isEmpty },
                 uptownDepartures: uptownFeed.flatMap { departures[$0.id] } ?? [],
                 downtownDepartures: downtownFeed.flatMap { departures[$0.id] } ?? []
             )
@@ -82,7 +94,11 @@ private struct NearbyStationCard: View {
 
             VStack(alignment: .leading, spacing: 0) {
                 ForEach(lineGroups) { group in
-                    LineRow(group: group)
+                    LineRow(group: group) {
+                        onSelectLine(LineDetailTarget(line: group.line,
+                                                      stationName: nearby.station.name,
+                                                      feeds: group.feeds))
+                    }
                     if group.id != lineGroups.last?.id {
                         Divider()
                             .background(Color.white.opacity(0.06))
@@ -122,6 +138,7 @@ private struct NearbyStationCard: View {
 
 private struct LineRow: View {
     let group: NearestLineGroup
+    let onTap: () -> Void
 
     var body: some View {
         HStack(alignment: .center, spacing: 10) {
@@ -142,9 +159,21 @@ private struct LineRow: View {
             }
 
             Spacer()
+
+            if group.hasAlert {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.caption2)
+                    .foregroundStyle(.yellow)
+            }
+
+            Image(systemName: "chevron.right")
+                .font(.caption2.weight(.semibold))
+                .foregroundStyle(.white.opacity(0.25))
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 7)
+        .contentShape(Rectangle())
+        .onTapGesture(perform: onTap)
     }
 }
 

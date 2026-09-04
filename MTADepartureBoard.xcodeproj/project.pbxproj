@@ -19,12 +19,14 @@
 		414576AF269BBEC9D6AC7F97 /* GTFSStaticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D960B72DC36472D9AE265 /* GTFSStaticService.swift */; };
 		41C3164DD4747D6C55C0F3B8 /* SubwayColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51309E3F4426098EB500906A /* SubwayColors.swift */; };
 		471567009B1D4FC399AC0596 /* SubwayLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7F13A663912BA8BA252354 /* SubwayLiveActivity.swift */; };
+		4C3BF476A8709FD14C853983 /* MTAAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E05131EDB3EBB12F253247E /* MTAAlertService.swift */; };
 		53560DD92FCDCDF8920E84DB /* MTAFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B76582C6637DBDE08A2DDCA /* MTAFeedService.swift */; };
 		60791A5092848CAD32A7678C /* MTADepartureBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45239161E1517C5C0C80B4A9 /* MTADepartureBoardApp.swift */; };
 		6AAC9E709A61765540338481 /* MTADepartureBoardWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD79C5643F640EC4477E01 /* MTADepartureBoardWidgetView.swift */; };
 		713164A003277E866D4002F6 /* LinePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2A35529238DAF06F21A06 /* LinePickerView.swift */; };
 		71CC3ED91668DE991F94F382 /* SharedDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61995BD758F2EDB0D70CC070 /* SharedDefaults.swift */; };
 		8629D9DEE5BF319616F60740 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55F363852C66F3C648B12CE /* LocationService.swift */; };
+		87943844CFDBDCF0146F7417 /* ServiceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5322A3148D4729F1827304 /* ServiceAlert.swift */; };
 		9287C7D8F499C659C969F8D6 /* NearestStationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF05776903E21D918E94270 /* NearestStationView.swift */; };
 		96FD36C2CE7E116A39EB09F1 /* FeedCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFCAFA55EDA5E42F17950B7 /* FeedCardView.swift */; };
 		9941CBF7FED480EBCC319793 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6765287F612E4CFA4095051 /* AppStore.swift */; };
@@ -36,7 +38,10 @@
 		B7E2F05F2AE3931A3C0F1FE7 /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3866695E601020401764CA8C /* Departure.swift */; };
 		D79990AEC82F6BCFC307950C /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3866695E601020401764CA8C /* Departure.swift */; };
 		E0B1F41A9945D73712942C13 /* WatchedFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73771ED01CFA9199F3F50BE0 /* WatchedFeed.swift */; };
+		E14CACA045A8115C597A05D3 /* LineDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420F385CECB128CCB47D8B26 /* LineDetailView.swift */; };
 		E38670467E0A88402911A83F /* SubwayDepartureAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8FD415C5C650E8620047A6 /* SubwayDepartureAttributes.swift */; };
+		E5F00C8621F911BFBEF926D7 /* ServiceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5322A3148D4729F1827304 /* ServiceAlert.swift */; };
+		E6985CC57187584735B91FB1 /* AlertText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B04B1ABE365AFC744C0556 /* AlertText.swift */; };
 		EE914049E8BFFC6E1CD315F5 /* nyct-subway.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA25546AB23A2AB3E1470FC5 /* nyct-subway.pb.swift */; };
 		EF37BA5437EAA1C18E11665E /* SelectLineIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211AF45811C5F4B7F27DA22A /* SelectLineIntent.swift */; };
 		F45587AD76BF3368C9D21A57 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1E0B917F59B837D53F6E5D /* Station.swift */; };
@@ -72,9 +77,11 @@
 		0FC95A43DD7B6BD135A93718 /* MTADepartureBoard.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MTADepartureBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		211AF45811C5F4B7F27DA22A /* SelectLineIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLineIntent.swift; sourceTree = "<group>"; };
 		2325B99E48902BCF569E10C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2E05131EDB3EBB12F253247E /* MTAAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTAAlertService.swift; sourceTree = "<group>"; };
 		34BEAE30CBD04F61E6BC7978 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3866695E601020401764CA8C /* Departure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Departure.swift; sourceTree = "<group>"; };
 		3EF05776903E21D918E94270 /* NearestStationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearestStationView.swift; sourceTree = "<group>"; };
+		420F385CECB128CCB47D8B26 /* LineDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineDetailView.swift; sourceTree = "<group>"; };
 		45239161E1517C5C0C80B4A9 /* MTADepartureBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTADepartureBoardApp.swift; sourceTree = "<group>"; };
 		51309E3F4426098EB500906A /* SubwayColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayColors.swift; sourceTree = "<group>"; };
 		5C99C6406A3A669A39DC8B83 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -90,12 +97,14 @@
 		9C1E0B917F59B837D53F6E5D /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		9E7D960B72DC36472D9AE265 /* GTFSStaticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTFSStaticService.swift; sourceTree = "<group>"; };
 		A55F363852C66F3C648B12CE /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		A5B04B1ABE365AFC744C0556 /* AlertText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertText.swift; sourceTree = "<group>"; };
 		AA25546AB23A2AB3E1470FC5 /* nyct-subway.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "nyct-subway.pb.swift"; sourceTree = "<group>"; };
 		B6765287F612E4CFA4095051 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		C7B5E36D85F25CDED26D3DA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C9E73C1F768C205341826FF7 /* MTADepartureBoardWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTADepartureBoardWidget.swift; sourceTree = "<group>"; };
 		D79CEFA3EBD2B5D13715BB24 /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
 		DF1178530B3D3EEE9D96DC75 /* StationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationPickerView.swift; sourceTree = "<group>"; };
+		EC5322A3148D4729F1827304 /* ServiceAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAlert.swift; sourceTree = "<group>"; };
 		F21D68EB7AB23E828491768C /* MTADepartureBoardWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTADepartureBoardWidgetBundle.swift; sourceTree = "<group>"; };
 		F430B7D0029605430F902210 /* DepartureBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartureBoardView.swift; sourceTree = "<group>"; };
 		F51401A1D28F974115E88797 /* MTADepartureBoard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MTADepartureBoard.entitlements; sourceTree = "<group>"; };
@@ -127,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				3866695E601020401764CA8C /* Departure.swift */,
+				EC5322A3148D4729F1827304 /* ServiceAlert.swift */,
 				9C1E0B917F59B837D53F6E5D /* Station.swift */,
 				51309E3F4426098EB500906A /* SubwayColors.swift */,
 				6B8FD415C5C650E8620047A6 /* SubwayDepartureAttributes.swift */,
@@ -158,6 +168,7 @@
 				9E7D960B72DC36472D9AE265 /* GTFSStaticService.swift */,
 				D79CEFA3EBD2B5D13715BB24 /* LiveActivityManager.swift */,
 				A55F363852C66F3C648B12CE /* LocationService.swift */,
+				2E05131EDB3EBB12F253247E /* MTAAlertService.swift */,
 				8B76582C6637DBDE08A2DDCA /* MTAFeedService.swift */,
 				61995BD758F2EDB0D70CC070 /* SharedDefaults.swift */,
 			);
@@ -199,9 +210,11 @@
 		DD688F95A934383D7C8781EE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A5B04B1ABE365AFC744C0556 /* AlertText.swift */,
 				5C99C6406A3A669A39DC8B83 /* ContentView.swift */,
 				F430B7D0029605430F902210 /* DepartureBoardView.swift */,
 				FAFCAFA55EDA5E42F17950B7 /* FeedCardView.swift */,
+				420F385CECB128CCB47D8B26 /* LineDetailView.swift */,
 				65F2A35529238DAF06F21A06 /* LinePickerView.swift */,
 				3EF05776903E21D918E94270 /* NearestStationView.swift */,
 				DF1178530B3D3EEE9D96DC75 /* StationPickerView.swift */,
@@ -306,6 +319,7 @@
 				3F8A61A2425A48C0D28E6C77 /* MTADepartureBoardWidgetBundle.swift in Sources */,
 				6AAC9E709A61765540338481 /* MTADepartureBoardWidgetView.swift in Sources */,
 				EF37BA5437EAA1C18E11665E /* SelectLineIntent.swift in Sources */,
+				E5F00C8621F911BFBEF926D7 /* ServiceAlert.swift in Sources */,
 				71CC3ED91668DE991F94F382 /* SharedDefaults.swift in Sources */,
 				281297700B651E1C38386D91 /* Station.swift in Sources */,
 				A5CD1D5C224008F1397077C6 /* SubwayColors.swift in Sources */,
@@ -319,18 +333,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6985CC57187584735B91FB1 /* AlertText.swift in Sources */,
 				9941CBF7FED480EBCC319793 /* AppStore.swift in Sources */,
 				0ABFDCE604B8B9B4537D22CD /* ContentView.swift in Sources */,
 				B7E2F05F2AE3931A3C0F1FE7 /* Departure.swift in Sources */,
 				A0FCECE82A7B51406003CFCE /* DepartureBoardView.swift in Sources */,
 				96FD36C2CE7E116A39EB09F1 /* FeedCardView.swift in Sources */,
 				414576AF269BBEC9D6AC7F97 /* GTFSStaticService.swift in Sources */,
+				E14CACA045A8115C597A05D3 /* LineDetailView.swift in Sources */,
 				713164A003277E866D4002F6 /* LinePickerView.swift in Sources */,
 				AC49FD0CB692C0B4CFFDB940 /* LiveActivityManager.swift in Sources */,
 				8629D9DEE5BF319616F60740 /* LocationService.swift in Sources */,
+				4C3BF476A8709FD14C853983 /* MTAAlertService.swift in Sources */,
 				60791A5092848CAD32A7678C /* MTADepartureBoardApp.swift in Sources */,
 				53560DD92FCDCDF8920E84DB /* MTAFeedService.swift in Sources */,
 				9287C7D8F499C659C969F8D6 /* NearestStationView.swift in Sources */,
+				87943844CFDBDCF0146F7417 /* ServiceAlert.swift in Sources */,
 				25AF93BFF59E06A023162E80 /* SharedDefaults.swift in Sources */,
 				F45587AD76BF3368C9D21A57 /* Station.swift in Sources */,
 				36A47AD210F2C0069DF6DDD3 /* StationPickerView.swift in Sources */,

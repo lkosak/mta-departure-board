@@ -3,6 +3,7 @@ import SwiftUI
 struct DepartureBoardView: View {
     @EnvironmentObject var store: AppStore
     @State private var showingStationPicker = false
+    @State private var selectedLine: LineDetailTarget?
 
     var body: some View {
         NavigationStack {
@@ -11,7 +12,13 @@ struct DepartureBoardView: View {
                 ForEach(store.watchedFeeds) { feed in
                     FeedCardView(
                         feed: feed,
-                        departures: store.departures[feed.id] ?? []
+                        departures: store.departures[feed.id] ?? [],
+                        alerts: store.alerts[feed.id] ?? [],
+                        onTap: {
+                            selectedLine = LineDetailTarget(line: feed.line,
+                                                            stationName: feed.stationName,
+                                                            feeds: [feed])
+                        }
                     )
                     .listRowBackground(Color.black)
                     .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
@@ -26,7 +33,7 @@ struct DepartureBoardView: View {
 
                 // Nearby stations section — shown when location is available
                 if !store.nearbyStations.isEmpty {
-                    NearbyStationsView()
+                    NearbyStationsView(onSelectLine: { selectedLine = $0 })
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.black)
                         .listRowSeparator(.hidden)
@@ -52,6 +59,9 @@ struct DepartureBoardView: View {
                         Image(systemName: "plus")
                     }
                 }
+            }
+            .navigationDestination(item: $selectedLine) { target in
+                LineDetailView(target: target)
             }
             .sheet(isPresented: $showingStationPicker) {
                 StationPickerView()

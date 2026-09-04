@@ -15,6 +15,7 @@ class AppStore: ObservableObject {
     @Published var stations: [Station] = []
     @Published var watchedFeeds: [WatchedFeed] = []
     @Published var departures: [UUID: [Departure]] = [:]
+    @Published var alerts: [UUID: [ServiceAlert]] = [:]
     @Published var isLoadingStations = false
     @Published var isLoadingDepartures = false
     @Published var error: String?
@@ -62,7 +63,10 @@ class AppStore: ObservableObject {
     func removeFeed(at offsets: IndexSet) {
         let ids = offsets.map { watchedFeeds[$0].id }
         watchedFeeds.remove(atOffsets: offsets)
-        for id in ids { departures[id] = nil }
+        for id in ids {
+            departures[id] = nil
+            alerts[id] = nil
+        }
         SharedDefaults.saveFeeds(watchedFeeds)
     }
 
@@ -94,6 +98,8 @@ class AppStore: ObservableObject {
         departures = userDeps
         nearbyStationDepartures = nearbyDeps
 
+        await refreshAlerts(for: watchedFeeds + nearbyFeeds)
+
         // Cache departures for widget
         let now = Date()
         var cached: [UUID: [CachedDeparture]] = [:]
@@ -103,6 +109,20 @@ class AppStore: ObservableObject {
         SharedDefaults.saveDepartures(cached)
         WidgetCenter.shared.reloadAllTimelines()
         await LiveActivityManager.shared.updateAll(departures: cached)
+    }
+
+    /// Alerts come from a single feed covering every line, and change slowly —
+    /// MTAAlertService caches the fetch, so calling this on each refresh is cheap.
+    private func refreshAlerts(for feeds: [WatchedFeed]) async {
+        guard !feeds.isEmpty else {
+            alerts = [:]
+            return
+        }
+        alerts = await MTAAlertService.shared.alerts(for: feeds)
+    }
+
+    func alerts(for feed: WatchedFeed) -> [ServiceAlert] {
+        alerts[feed.id] ?? []
     }
 
     func startAutoRefresh() {

@@ -4,6 +4,8 @@ import SwiftUI
 struct FeedCardView: View {
     let feed: WatchedFeed
     let departures: [Departure]
+    var alerts: [ServiceAlert] = []
+    var onTap: (() -> Void)? = nil
 
     @EnvironmentObject private var liveActivityManager: LiveActivityManager
 
@@ -45,10 +47,34 @@ struct FeedCardView: View {
                     }
                     .buttonStyle(.plain)
                 }
+
+                Image(systemName: "chevron.right")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.white.opacity(0.3))
             }
 
             Divider()
                 .background(Color.gray.opacity(0.5))
+
+            // Service alerts — first one only; the detail view lists them all
+            if let alert = alerts.first {
+                HStack(alignment: .firstTextBaseline, spacing: 6) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .font(.caption2)
+                        .foregroundStyle(.yellow)
+                    Text(alert.plainHeader)
+                        .font(.caption)
+                        .foregroundStyle(.yellow.opacity(0.85))
+                        .lineLimit(2)
+                    Spacer(minLength: 0)
+                    if alerts.count > 1 {
+                        Text("+\(alerts.count - 1)")
+                            .font(.caption2.weight(.semibold))
+                            .foregroundStyle(.yellow.opacity(0.6))
+                    }
+                }
+                .padding(.vertical, 2)
+            }
 
             // Departures
             if departures.isEmpty {
@@ -65,6 +91,10 @@ struct FeedCardView: View {
         .padding()
         .background(Color(white: 0.1))
         .clipShape(RoundedRectangle(cornerRadius: 12))
+        .contentShape(Rectangle())
+        .onTapGesture {
+            onTap?()
+        }
     }
 }
 
