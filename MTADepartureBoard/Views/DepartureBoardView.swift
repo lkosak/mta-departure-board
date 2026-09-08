@@ -4,6 +4,7 @@ struct DepartureBoardView: View {
     @EnvironmentObject var store: AppStore
     @State private var showingStationPicker = false
     @State private var selectedLine: LineDetailTarget?
+    @State private var selectedTrip: TripDetailTarget?
 
     var body: some View {
         NavigationStack {
@@ -18,6 +19,9 @@ struct DepartureBoardView: View {
                             selectedLine = LineDetailTarget(line: feed.line,
                                                             stationName: feed.stationName,
                                                             feeds: [feed])
+                        },
+                        onSelectDeparture: { departure in
+                            selectedTrip = TripDetailTarget(feed: feed, departure: departure)
                         }
                     )
                     .listRowBackground(Color.black)
@@ -65,6 +69,9 @@ struct DepartureBoardView: View {
             }
             .sheet(isPresented: $showingStationPicker) {
                 StationPickerView()
+            }
+            .sheet(item: $selectedTrip) { trip in
+                TripStopsView(target: trip)
             }
         }
         .onAppear {

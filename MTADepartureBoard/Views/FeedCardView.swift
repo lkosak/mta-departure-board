@@ -6,6 +6,8 @@ struct FeedCardView: View {
     let departures: [Departure]
     var alerts: [ServiceAlert] = []
     var onTap: (() -> Void)? = nil
+    /// Tapping one arrival opens that train's downstream stop times.
+    var onSelectDeparture: ((Departure) -> Void)? = nil
 
     @EnvironmentObject private var liveActivityManager: LiveActivityManager
 
@@ -84,7 +86,9 @@ struct FeedCardView: View {
                     .padding(.vertical, 4)
             } else {
                 ForEach(departures.prefix(4)) { departure in
-                    DepartureRow(departure: departure)
+                    DepartureRow(departure: departure) {
+                        onSelectDeparture?(departure)
+                    }
                 }
             }
         }
@@ -114,6 +118,7 @@ struct LineBullet: View {
 
 struct DepartureRow: View {
     let departure: Departure
+    var onTap: (() -> Void)? = nil
 
     var body: some View {
         HStack {
@@ -140,6 +145,8 @@ struct DepartureRow: View {
                     .foregroundStyle(departure.minutes > 20 ? .gray : .white)
             }
         }
-        .padding(.vertical, 2)
+        .padding(.vertical, 3)
+        .contentShape(Rectangle())
+        .onTapGesture { onTap?() }
     }
 }

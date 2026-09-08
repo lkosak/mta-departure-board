@@ -28,6 +28,11 @@ struct MTAFeedService {
         "S": "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs",
     ]
 
+    /// Route IDs we can draw a bullet for, in the order riders expect them.
+    private static let displayLines = ["1","2","3","4","5","6","7","A","C","E","B","D","F","M","G","J","Z","L","N","Q","R","W","S"]
+    /// GTFS gives the shuttles their own route IDs; riders just see an S.
+    private static let shuttleRouteIds: Set<String> = ["GS", "FS", "H", "SS"]
+
     static func feedURL(forLine line: String) -> URL? {
         feedURLs[line].flatMap { URL(string: $0) }
     }
@@ -36,9 +41,15 @@ struct MTAFeedService {
         guard let url = feedURL(forLine: feed.line) else { return [] }
         let (data, _) = try await URLSession.shared.data(from: url)
         let message = try TransitRealtime_FeedMessage(serializedBytes: [UInt8](data))
+        return departures(from: message, for: feed)
+    }
 
-        let now = Date().timeIntervalSince1970
-
+    /// Pull every upcoming train for one feed out of a parsed realtime message,
+    /// carrying along the rest of each trip so we can answer "when does this
+    /// train reach station X?".
+    private static func departures(from message: TransitRealtime_FeedMessage,
+                                   for feed: WatchedFeed,
+                                   now: TimeInterval = Date().timeIntervalSince1970) -> [Departure] {
         var departures: [Departure] = []
 
         for entity in message.entity {
@@ -46,29 +57,54 @@ struct MTAFeedService {
             let trip = entity.tripUpdate
             guard trip.trip.routeID.hasPrefix(feed.line) else { continue }
 
-            for stopTime in trip.stopTimeUpdate {
+            for (index, stopTime) in trip.stopTimeUpdate.enumerated() {
                 guard stopTime.stopID == feed.directionStopId else { continue }
-
-                let arrivalTime: Int64
-                if stopTime.hasArrival {
-                    arrivalTime = stopTime.arrival.time
-                } else if stopTime.hasDeparture {
-                    arrivalTime = stopTime.departure.time
-                } else {
-                    continue
-                }
+                guard let arrivalTime = stopTime.scheduledTime else { continue }
 
                 let seconds = Double(arrivalTime) - now
                 guard seconds >= 0 else { continue }
-                let minutes = Int(seconds / 60.0)
 
-                let destination = lastStopName(for: trip, line: feed.line)
-                let arrivalDate = Date(timeIntervalSince1970: Double(arrivalTime))
-                departures.append(Departure(line: feed.line, destination: destination, minutes: minutes, arrivalDate: arrivalDate))
+                departures.append(Departure(
+                    line: feed.line,
+                    destination: lastStopName(for: trip, line: feed.line),
+                    minutes: Int(seconds / 60.0),
+                    arrivalDate: Date(timeIntervalSince1970: Double(arrivalTime)),
+                    tripId: trip.trip.tripID,
+                    remainingStops: remainingStops(of: trip, after: index, line: feed.line)
+                ))
             }
         }
 
         return departures.sorted { $0.minutes < $1.minutes }
+    }
+
+    /// The stops this train serves after the one you'd board at, in order.
+    private static func remainingStops(of tripUpdate: TransitRealtime_TripUpdate,
+                                       after index: Int,
+                                       line: String) -> [TripStop] {
+        tripUpdate.stopTimeUpdate.dropFirst(index + 1).compactMap { stopTime in
+            guard let arrivalTime = stopTime.scheduledTime else { return nil }
+            let stopId = stopTime.stopID
+            let prefix = (stopId.hasSuffix("N") || stopId.hasSuffix("S")) ? String(stopId.dropLast()) : stopId
+            return TripStop(
+                stopId: stopId,
+                stationName: GTFSStaticService.stationName(forStopPrefix: prefix) ?? stopId,
+                transferLines: transfers(from: GTFSStaticService.lines(forStopPrefix: prefix), excluding: line),
+                arrivalDate: Date(timeIntervalSince1970: Double(arrivalTime))
+            )
+        }
+    }
+
+    /// Lines a rider could change to at a stop: the train's own line dropped,
+    /// shuttles folded into S, anything we can't render (SIR, bus routes) skipped.
+    private static func transfers(from routes: [String], excluding line: String) -> [String] {
+        var result: Set<String> = []
+        for route in routes {
+            let normalized = shuttleRouteIds.contains(route) ? "S" : route
+            guard normalized != line, displayLines.contains(normalized) else { continue }
+            result.insert(normalized)
+        }
+        return displayLines.filter { result.contains($0) }
     }
 
     private static func lastStopName(for tripUpdate: TransitRealtime_TripUpdate, line: String) -> String {
@@ -114,36 +150,7 @@ struct MTAFeedService {
                 let now = Date().timeIntervalSince1970
 
                 for feed in groupFeeds {
-                    var departures: [Departure] = []
-
-                    for entity in message.entity {
-                        guard entity.hasTripUpdate else { continue }
-                        let trip = entity.tripUpdate
-                        guard trip.trip.routeID.hasPrefix(feed.line) else { continue }
-
-                        for stopTime in trip.stopTimeUpdate {
-                            guard stopTime.stopID == feed.directionStopId else { continue }
-
-                            let arrivalTime: Int64
-                            if stopTime.hasArrival {
-                                arrivalTime = stopTime.arrival.time
-                            } else if stopTime.hasDeparture {
-                                arrivalTime = stopTime.departure.time
-                            } else {
-                                continue
-                            }
-
-                            let seconds = Double(arrivalTime) - now
-                            guard seconds >= 0 else { continue }
-                            let minutes = Int(seconds / 60.0)
-
-                            let destination = lastStopName(for: trip, line: feed.line)
-                            let arrivalDate = Date(timeIntervalSince1970: Double(arrivalTime))
-                            departures.append(Departure(line: feed.line, destination: destination, minutes: minutes, arrivalDate: arrivalDate))
-                        }
-                    }
-
-                    results[feed.id] = departures.sorted { $0.minutes < $1.minutes }
+                    results[feed.id] = departures(from: message, for: feed, now: now)
                 }
             } catch {
                 for feed in groupFeeds {
@@ -153,5 +160,14 @@ struct MTAFeedService {
         }
 
         return results
+    }
+}
+
+private extension TransitRealtime_TripUpdate.StopTimeUpdate {
+    /// Arrival if the feed gives one, otherwise departure.
+    var scheduledTime: Int64? {
+        if hasArrival { return arrival.time }
+        if hasDeparture { return departure.time }
+        return nil
     }
 }

@@ -17,9 +17,15 @@ actor GTFSStaticService {
     private var loaded = false
 
     nonisolated(unsafe) private static var _stationNameMap: [String: String] = [:]
+    nonisolated(unsafe) private static var _stationLinesMap: [String: [String]] = [:]
 
     static func stationName(forStopPrefix prefix: String) -> String? {
         _stationNameMap[prefix]
+    }
+
+    /// Every line serving the station a stop belongs to — used for transfer hints.
+    static func lines(forStopPrefix prefix: String) -> [String] {
+        _stationLinesMap[prefix] ?? []
     }
 
     func loadStations() async throws -> [Station] {
@@ -48,6 +54,7 @@ actor GTFSStaticService {
         // Map every stop prefix to the station name (for destination lookups)
         // Build from raw stops.txt so we cover parent stops too
         Self._stationNameMap = buildStopNameMap(stopsCSV: stopsData)
+        Self._stationLinesMap = buildStopLinesMap(stopRoutes: stopRoutes)
 
         return stations
     }
@@ -297,6 +304,18 @@ actor GTFSStaticService {
             if stopId.hasSuffix("N") || stopId.hasSuffix("S") {
                 map[String(stopId.dropLast())] = name
             }
+        }
+        return map
+    }
+
+    /// Map each stop_id (and its N/S variants) to the lines serving that stop.
+    private func buildStopLinesMap(stopRoutes: [String: Set<String>]) -> [String: [String]] {
+        var map: [String: [String]] = [:]
+        for (prefix, routes) in stopRoutes {
+            let sorted = routes.sorted()
+            map[prefix] = sorted
+            map[prefix + "N"] = sorted
+            map[prefix + "S"] = sorted
         }
         return map
     }
