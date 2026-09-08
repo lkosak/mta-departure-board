@@ -15,6 +15,7 @@ struct LineDetailView: View {
     let target: LineDetailTarget
 
     @EnvironmentObject var store: AppStore
+    @State private var selectedTrip: TripDetailTarget?
 
     private static let maxDepartures = 12
 
@@ -35,7 +36,10 @@ struct LineDetailView: View {
                 ForEach(target.feeds) { feed in
                     DirectionSection(
                         feed: feed,
-                        departures: Array(departures(for: feed).prefix(Self.maxDepartures))
+                        departures: Array(departures(for: feed).prefix(Self.maxDepartures)),
+                        onSelectDeparture: { departure in
+                            selectedTrip = TripDetailTarget(feed: feed, departure: departure)
+                        }
                     )
                 }
             }
@@ -52,6 +56,9 @@ struct LineDetailView: View {
         .onAppear {
             store.startAutoRefresh()
         }
+        .sheet(item: $selectedTrip) { trip in
+            TripStopsView(target: trip)
+        }
     }
 
     private var header: some View {
@@ -61,7 +68,7 @@ struct LineDetailView: View {
                 Text("\(target.line) train")
                     .font(.title3.weight(.semibold))
                     .foregroundStyle(.white)
-                Text("Upcoming trains")
+                Text("Tap a train for stop-by-stop times")
                     .font(.caption)
                     .foregroundStyle(.gray)
             }
@@ -163,6 +170,7 @@ private struct AlertCard: View {
 private struct DirectionSection: View {
     let feed: WatchedFeed
     let departures: [Departure]
+    let onSelectDeparture: (Departure) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -181,7 +189,9 @@ private struct DirectionSection: View {
                     .padding(.vertical, 4)
             } else {
                 ForEach(departures) { departure in
-                    DetailDepartureRow(departure: departure)
+                    DetailDepartureRow(departure: departure) {
+                        onSelectDeparture(departure)
+                    }
                 }
             }
         }
@@ -193,6 +203,7 @@ private struct DirectionSection: View {
 
 private struct DetailDepartureRow: View {
     let departure: Departure
+    let onTap: () -> Void
 
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
@@ -209,8 +220,14 @@ private struct DetailDepartureRow: View {
 
             countdown
                 .frame(minWidth: 60, alignment: .trailing)
+
+            Image(systemName: "chevron.right")
+                .font(.caption2.weight(.semibold))
+                .foregroundStyle(.white.opacity(0.25))
         }
-        .padding(.vertical, 2)
+        .padding(.vertical, 4)
+        .contentShape(Rectangle())
+        .onTapGesture(perform: onTap)
     }
 
     @ViewBuilder
