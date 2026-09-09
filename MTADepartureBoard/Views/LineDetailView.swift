@@ -68,7 +68,7 @@ struct LineDetailView: View {
                 Text("\(target.line) train")
                     .font(.title3.weight(.semibold))
                     .foregroundStyle(.white)
-                Text("Tap a train for stop-by-stop times")
+                Text("Tap a time for stop-by-stop arrivals")
                     .font(.caption)
                     .foregroundStyle(.gray)
             }
@@ -189,9 +189,9 @@ private struct DirectionSection: View {
                     .padding(.vertical, 4)
             } else {
                 ForEach(departures) { departure in
-                    DetailDepartureRow(departure: departure) {
+                    DetailDepartureRow(departure: departure, onTapTime: {
                         onSelectDeparture(departure)
-                    }
+                    })
                 }
             }
         }
@@ -203,7 +203,8 @@ private struct DirectionSection: View {
 
 private struct DetailDepartureRow: View {
     let departure: Departure
-    let onTap: () -> Void
+    /// Fires for taps on the time only, matching the board's departure rows.
+    let onTapTime: () -> Void
 
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
@@ -214,20 +215,24 @@ private struct DetailDepartureRow: View {
 
             Spacer(minLength: 12)
 
-            Text(departure.arrivalDate.formatted(date: .omitted, time: .shortened))
-                .font(.caption.monospacedDigit())
-                .foregroundStyle(.gray)
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text(departure.arrivalDate.formatted(date: .omitted, time: .shortened))
+                    .font(.caption.monospacedDigit())
+                    .foregroundStyle(.gray)
 
-            countdown
-                .frame(minWidth: 60, alignment: .trailing)
+                countdown
+                    .frame(minWidth: 60, alignment: .trailing)
 
-            Image(systemName: "chevron.right")
-                .font(.caption2.weight(.semibold))
-                .foregroundStyle(.white.opacity(0.25))
+                Image(systemName: "chevron.right")
+                    .font(.caption2.weight(.semibold))
+                    .foregroundStyle(.white.opacity(0.25))
+            }
+            .padding(.vertical, 5)
+            .padding(.leading, 12)
+            .contentShape(Rectangle())
+            .onTapGesture(perform: onTapTime)
         }
-        .padding(.vertical, 4)
-        .contentShape(Rectangle())
-        .onTapGesture(perform: onTap)
+        .padding(.vertical, 1)
     }
 
     @ViewBuilder

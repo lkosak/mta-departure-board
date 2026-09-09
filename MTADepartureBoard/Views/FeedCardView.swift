@@ -6,7 +6,8 @@ struct FeedCardView: View {
     let departures: [Departure]
     var alerts: [ServiceAlert] = []
     var onTap: (() -> Void)? = nil
-    /// Tapping one arrival opens that train's downstream stop times.
+    /// Tapping an arrival time opens that train's downstream stop times;
+    /// anywhere else on the card opens the line.
     var onSelectDeparture: ((Departure) -> Void)? = nil
 
     @EnvironmentObject private var liveActivityManager: LiveActivityManager
@@ -86,9 +87,9 @@ struct FeedCardView: View {
                     .padding(.vertical, 4)
             } else {
                 ForEach(departures.prefix(4)) { departure in
-                    DepartureRow(departure: departure) {
+                    DepartureRow(departure: departure, onTapTime: {
                         onSelectDeparture?(departure)
-                    }
+                    })
                 }
             }
         }
@@ -118,7 +119,8 @@ struct LineBullet: View {
 
 struct DepartureRow: View {
     let departure: Departure
-    var onTap: (() -> Void)? = nil
+    /// Fires for taps on the time only — the rest of the row belongs to the card.
+    var onTapTime: (() -> Void)? = nil
 
     var body: some View {
         HStack {
@@ -131,22 +133,35 @@ struct DepartureRow: View {
 
             Spacer()
 
-            if departure.minutes == 0 {
-                Text("arriving")
-                    .font(.subheadline.bold())
-                    .foregroundStyle(.green)
-            } else if departure.minutes == 1 {
-                Text("1 min")
-                    .font(.subheadline.weight(.medium))
-                    .foregroundStyle(.white)
-            } else {
-                Text("\(departure.minutes) min")
-                    .font(.subheadline.weight(.medium))
-                    .foregroundStyle(departure.minutes > 20 ? .gray : .white)
+            HStack(spacing: 4) {
+                countdown
+
+                Image(systemName: "chevron.right")
+                    .font(.caption2.weight(.semibold))
+                    .foregroundStyle(.white.opacity(0.25))
             }
+            .padding(.vertical, 5)
+            .padding(.leading, 12)
+            .contentShape(Rectangle())
+            .onTapGesture { onTapTime?() }
         }
-        .padding(.vertical, 3)
-        .contentShape(Rectangle())
-        .onTapGesture { onTap?() }
+        .padding(.vertical, 1)
+    }
+
+    @ViewBuilder
+    private var countdown: some View {
+        if departure.minutes == 0 {
+            Text("arriving")
+                .font(.subheadline.bold())
+                .foregroundStyle(.green)
+        } else if departure.minutes == 1 {
+            Text("1 min")
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(.white)
+        } else {
+            Text("\(departure.minutes) min")
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(departure.minutes > 20 ? .gray : .white)
+        }
     }
 }

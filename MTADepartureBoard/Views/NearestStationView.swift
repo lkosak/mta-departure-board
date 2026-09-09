@@ -4,6 +4,8 @@ private struct NearestLineGroup: Identifiable {
     let line: String
     let feeds: [WatchedFeed]
     let hasAlert: Bool
+    let uptownFeed: WatchedFeed?
+    let downtownFeed: WatchedFeed?
     let uptownDepartures: [Departure]
     let downtownDepartures: [Departure]
     var id: String { line }
@@ -14,6 +16,7 @@ struct NearbyStationsView: View {
     @EnvironmentObject var store: AppStore
 
     var onSelectLine: (LineDetailTarget) -> Void = { _ in }
+    var onSelectDeparture: (TripDetailTarget) -> Void = { _ in }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -35,7 +38,8 @@ struct NearbyStationsView: View {
                 NearbyStationCard(nearby: nearby,
                                   departures: store.nearbyStationDepartures,
                                   alerts: store.alerts,
-                                  onSelectLine: onSelectLine)
+                                  onSelectLine: onSelectLine,
+                                  onSelectDeparture: onSelectDeparture)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 8)
             }
@@ -48,6 +52,7 @@ private struct NearbyStationCard: View {
     let departures: [UUID: [Departure]]
     let alerts: [UUID: [ServiceAlert]]
     let onSelectLine: (LineDetailTarget) -> Void
+    let onSelectDeparture: (TripDetailTarget) -> Void
 
     private static let lineOrder = ["1","2","3","4","5","6","7","A","C","E","B","D","F","M","G","J","Z","L","N","Q","R","W","S"]
 
@@ -63,6 +68,8 @@ private struct NearbyStationCard: View {
                 line: line,
                 feeds: feeds,
                 hasAlert: feeds.contains { !(alerts[$0.id] ?? []).isEmpty },
+                uptownFeed: uptownFeed,
+                downtownFeed: downtownFeed,
                 uptownDepartures: uptownFeed.flatMap { departures[$0.id] } ?? [],
                 downtownDepartures: downtownFeed.flatMap { departures[$0.id] } ?? []
             )
@@ -94,7 +101,8 @@ private struct NearbyStationCard: View {
 
             VStack(alignment: .leading, spacing: 0) {
                 ForEach(lineGroups) { group in
-                    LineRow(group: group) {
+                    LineRow(group: group,
+                            onSelectDeparture: onSelectDeparture) {
                         onSelectLine(LineDetailTarget(line: group.line,
                                                       stationName: nearby.station.name,
                                                       feeds: group.feeds))
@@ -138,6 +146,7 @@ private struct NearbyStationCard: View {
 
 private struct LineRow: View {
     let group: NearestLineGroup
+    let onSelectDeparture: (TripDetailTarget) -> Void
     let onTap: () -> Void
 
     var body: some View {
@@ -145,11 +154,15 @@ private struct LineRow: View {
             LineBullet(line: group.line, size: 26)
 
             VStack(alignment: .leading, spacing: 3) {
-                if !group.uptownDepartures.isEmpty {
-                    DirectionDepartures(label: "↑", departures: group.uptownDepartures)
+                if let feed = group.uptownFeed, !group.uptownDepartures.isEmpty {
+                    DirectionDepartures(label: "↑", departures: group.uptownDepartures) { departure in
+                        onSelectDeparture(TripDetailTarget(feed: feed, departure: departure))
+                    }
                 }
-                if !group.downtownDepartures.isEmpty {
-                    DirectionDepartures(label: "↓", departures: group.downtownDepartures)
+                if let feed = group.downtownFeed, !group.downtownDepartures.isEmpty {
+                    DirectionDepartures(label: "↓", departures: group.downtownDepartures) { departure in
+                        onSelectDeparture(TripDetailTarget(feed: feed, departure: departure))
+                    }
                 }
                 if group.uptownDepartures.isEmpty && group.downtownDepartures.isEmpty {
                     Text("No trains")
@@ -171,7 +184,7 @@ private struct LineRow: View {
                 .foregroundStyle(.white.opacity(0.25))
         }
         .padding(.horizontal, 12)
-        .padding(.vertical, 7)
+        .padding(.vertical, 5)
         .contentShape(Rectangle())
         .onTapGesture(perform: onTap)
     }
@@ -180,6 +193,8 @@ private struct LineRow: View {
 private struct DirectionDepartures: View {
     let label: String
     let departures: [Departure]
+    /// Fires for taps on a time only — the rest of the row opens the line.
+    let onSelectDeparture: (Departure) -> Void
 
     var body: some View {
         HStack(spacing: 8) {
@@ -188,9 +203,17 @@ private struct DirectionDepartures: View {
                 .foregroundStyle(.gray)
                 .frame(width: 10)
 
-            HStack(spacing: 10) {
+            // Each time is its own tap target — the pill says so, since a
+            // chevron per number would swamp the row.
+            HStack(spacing: 4) {
                 ForEach(departures.prefix(3)) { dep in
                     minuteView(dep)
+                        .padding(.vertical, 3)
+                        .padding(.horizontal, 6)
+                        .background(Color.white.opacity(0.07),
+                                    in: RoundedRectangle(cornerRadius: 6))
+                        .contentShape(Rectangle())
+                        .onTapGesture { onSelectDeparture(dep) }
                 }
             }
 

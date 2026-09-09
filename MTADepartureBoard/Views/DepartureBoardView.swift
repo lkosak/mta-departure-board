@@ -37,7 +37,8 @@ struct DepartureBoardView: View {
 
                 // Nearby stations section — shown when location is available
                 if !store.nearbyStations.isEmpty {
-                    NearbyStationsView(onSelectLine: { selectedLine = $0 })
+                    NearbyStationsView(onSelectLine: { selectedLine = $0 },
+                                       onSelectDeparture: { selectedTrip = $0 })
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.black)
                         .listRowSeparator(.hidden)
