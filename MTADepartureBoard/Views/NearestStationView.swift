@@ -203,11 +203,15 @@ private struct DirectionDepartures: View {
                 .foregroundStyle(.gray)
                 .frame(width: 10)
 
-            HStack(spacing: 2) {
+            // Each time is its own tap target — the pill says so, since a
+            // chevron per number would swamp the row.
+            HStack(spacing: 4) {
                 ForEach(departures.prefix(3)) { dep in
                     minuteView(dep)
-                        .padding(.vertical, 4)
-                        .padding(.horizontal, 4)
+                        .padding(.vertical, 3)
+                        .padding(.horizontal, 6)
+                        .background(Color.white.opacity(0.07),
+                                    in: RoundedRectangle(cornerRadius: 6))
                         .contentShape(Rectangle())
                         .onTapGesture { onSelectDeparture(dep) }
                 }

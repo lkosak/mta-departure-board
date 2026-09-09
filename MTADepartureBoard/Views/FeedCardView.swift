@@ -133,11 +133,17 @@ struct DepartureRow: View {
 
             Spacer()
 
-            countdown
-                .padding(.vertical, 5)
-                .padding(.leading, 12)
-                .contentShape(Rectangle())
-                .onTapGesture { onTapTime?() }
+            HStack(spacing: 4) {
+                countdown
+
+                Image(systemName: "chevron.right")
+                    .font(.caption2.weight(.semibold))
+                    .foregroundStyle(.white.opacity(0.25))
+            }
+            .padding(.vertical, 5)
+            .padding(.leading, 12)
+            .contentShape(Rectangle())
+            .onTapGesture { onTapTime?() }
         }
         .padding(.vertical, 1)
     }
