@@ -6,8 +6,6 @@
 	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Used to automatically show departures from your nearest subway station.</string>
-	<key>NSSupportsLiveActivities</key>
-	<true/>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>io.lou.subwayboard.refresh</string>

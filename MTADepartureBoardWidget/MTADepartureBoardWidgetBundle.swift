@@ -5,6 +5,5 @@ import WidgetKit
 struct MTADepartureBoardWidgetBundle: WidgetBundle {
     var body: some Widget {
         MTADepartureBoardWidget()
-        SubwayLiveActivity()
     }
 }
