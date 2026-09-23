@@ -7,14 +7,12 @@ private let refreshTaskIdentifier = "io.lou.subwayboard.refresh"
 @main
 struct MTADepartureBoardApp: App {
     @StateObject private var store = AppStore()
-    @StateObject private var liveActivityManager = LiveActivityManager.shared
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(store)
-                .environmentObject(liveActivityManager)
                 .preferredColorScheme(.dark)
         }
         .onChange(of: scenePhase) { _, newPhase in
@@ -49,5 +47,4 @@ private func runBackgroundRefresh() async {
     }
     SharedDefaults.saveDepartures(cached)
     WidgetCenter.shared.reloadAllTimelines()
-    await LiveActivityManager.shared.updateAll(departures: cached)
 }

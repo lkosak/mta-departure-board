@@ -1,4 +1,3 @@
-import ActivityKit
 import SwiftUI
 
 struct FeedCardView: View {
@@ -9,12 +8,6 @@ struct FeedCardView: View {
     /// Tapping an arrival time opens that train's downstream stop times;
     /// anywhere else on the card opens the line.
     var onSelectDeparture: ((Departure) -> Void)? = nil
-
-    @EnvironmentObject private var liveActivityManager: LiveActivityManager
-
-    private var isLiveActive: Bool {
-        liveActivityManager.activeFeedIds.contains(feed.id)
-    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -32,24 +25,6 @@ struct FeedCardView: View {
                 }
 
                 Spacer()
-
-                if ActivityAuthorizationInfo().areActivitiesEnabled {
-                    Button {
-                        Task {
-                            if isLiveActive {
-                                await liveActivityManager.stop(feedId: feed.id)
-                            } else {
-                                let cached = departures.map { CachedDeparture(from: $0) }
-                                liveActivityManager.start(feed: feed, departures: cached)
-                            }
-                        }
-                    } label: {
-                        Image(systemName: "dot.radiowaves.left.and.right")
-                            .font(.subheadline)
-                            .foregroundStyle(isLiveActive ? .green : .white.opacity(0.4))
-                    }
-                    .buttonStyle(.plain)
-                }
 
                 Image(systemName: "chevron.right")
                     .font(.caption.weight(.semibold))

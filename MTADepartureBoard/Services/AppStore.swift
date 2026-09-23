@@ -108,7 +108,6 @@ class AppStore: ObservableObject {
         }
         SharedDefaults.saveDepartures(cached)
         WidgetCenter.shared.reloadAllTimelines()
-        await LiveActivityManager.shared.updateAll(departures: cached)
     }
 
     /// Alerts come from a single feed covering every line, and change slowly —
