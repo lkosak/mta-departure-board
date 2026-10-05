@@ -38,6 +38,7 @@
 		E14CACA045A8115C597A05D3 /* LineDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420F385CECB128CCB47D8B26 /* LineDetailView.swift */; };
 		E5F00C8621F911BFBEF926D7 /* ServiceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5322A3148D4729F1827304 /* ServiceAlert.swift */; };
 		E6985CC57187584735B91FB1 /* AlertText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B04B1ABE365AFC744C0556 /* AlertText.swift */; };
+		EAEC22ADEDDD6EB793C58896 /* TripStopsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE267230EAA4970F300CCA /* TripStopsView.swift */; };
 		EE914049E8BFFC6E1CD315F5 /* nyct-subway.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA25546AB23A2AB3E1470FC5 /* nyct-subway.pb.swift */; };
 		EF37BA5437EAA1C18E11665E /* SelectLineIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211AF45811C5F4B7F27DA22A /* SelectLineIntent.swift */; };
 		F45587AD76BF3368C9D21A57 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1E0B917F59B837D53F6E5D /* Station.swift */; };
@@ -80,6 +81,7 @@
 		420F385CECB128CCB47D8B26 /* LineDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineDetailView.swift; sourceTree = "<group>"; };
 		45239161E1517C5C0C80B4A9 /* MTADepartureBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTADepartureBoardApp.swift; sourceTree = "<group>"; };
 		51309E3F4426098EB500906A /* SubwayColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayColors.swift; sourceTree = "<group>"; };
+		5ADE267230EAA4970F300CCA /* TripStopsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripStopsView.swift; sourceTree = "<group>"; };
 		5C99C6406A3A669A39DC8B83 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		61995BD758F2EDB0D70CC070 /* SharedDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDefaults.swift; sourceTree = "<group>"; };
 		63714D41F9B9E2A54255CAF8 /* MTADepartureBoardWidgetExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = MTADepartureBoardWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,6 +210,7 @@
 				65F2A35529238DAF06F21A06 /* LinePickerView.swift */,
 				3EF05776903E21D918E94270 /* NearestStationView.swift */,
 				DF1178530B3D3EEE9D96DC75 /* StationPickerView.swift */,
+				5ADE267230EAA4970F300CCA /* TripStopsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				F45587AD76BF3368C9D21A57 /* Station.swift in Sources */,
 				36A47AD210F2C0069DF6DDD3 /* StationPickerView.swift in Sources */,
 				41C3164DD4747D6C55C0F3B8 /* SubwayColors.swift in Sources */,
+				EAEC22ADEDDD6EB793C58896 /* TripStopsView.swift in Sources */,
 				A54FF7B9AED91F863722A56C /* WatchedFeed.swift in Sources */,
 				2F26369B37B56BD237FA03A0 /* gtfs-realtime.pb.swift in Sources */,
 				EE914049E8BFFC6E1CD315F5 /* nyct-subway.pb.swift in Sources */,
